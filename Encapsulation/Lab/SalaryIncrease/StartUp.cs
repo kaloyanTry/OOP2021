@@ -8,20 +8,20 @@ namespace PersonsInfo
     {
         static void Main(string[] args)
         {
-            var lines = int.Parse(Console.ReadLine());
+            int n = int.Parse(Console.ReadLine());
             var persons = new List<Person>();
-            for (int i = 0; i < lines; i++)
-            {
-                var cmdArgs = Console.ReadLine().Split();
-                var person = new Person(cmdArgs[0],
-                                        cmdArgs[1],
-                                        int.Parse(cmdArgs[2]),
-                                        decimal.Parse(cmdArgs[3]));
 
+            for (int i = 0; i < n; i++)
+            {
+                var inputData = Console.ReadLine().Split();
+                Person person = new Person(inputData[0], inputData[1], int.Parse(inputData[2]), decimal.Parse(inputData[3]));
                 persons.Add(person);
             }
-            var parcentage = decimal.Parse(Console.ReadLine());
-            persons.ForEach(p => p.IncreaseSalary(parcentage));
+
+            decimal percantage = decimal.Parse(Console.ReadLine());
+
+            persons.ForEach(p => p.IncreaseSalary(percantage));
+
             persons.ForEach(p => Console.WriteLine(p.ToString()));
         }
     }

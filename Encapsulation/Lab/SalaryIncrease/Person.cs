@@ -27,9 +27,10 @@ namespace PersonsInfo
             }
             Salary += Salary * percentage / 100;
         }
+
         public override string ToString()
         {
-            return $"{FirstName} {LastName} receives {Salary:f2} leva.";
+            return $"{FirstName} {LastName} receives {Salary:F2} leva.";
         }
     }
 }
