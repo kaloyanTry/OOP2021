@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PersonInfo
+﻿namespace PersonInfo
 {
-    interface IRobot : IIdentifiable
+    public interface IRobot : IIdentifiable
     {
         string Model { get; }
     }

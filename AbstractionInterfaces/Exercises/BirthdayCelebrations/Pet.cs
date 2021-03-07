@@ -10,9 +10,9 @@ namespace PersonInfo
         {
             Name = name;
             Birthdate = birthdate;
-
         }
         public string Name { get; private set; }
+
         public string Birthdate { get; private set; }
     }
 }

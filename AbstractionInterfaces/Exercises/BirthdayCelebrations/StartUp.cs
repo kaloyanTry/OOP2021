@@ -6,9 +6,9 @@ namespace PersonInfo
 {
     public class StartUp
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            List<IBirthable> birthable = new List<IBirthable>();
+            List<IBirthable> birthables = new List<IBirthable>();
 
             while (true)
             {
@@ -18,35 +18,34 @@ namespace PersonInfo
                     break;
                 }
 
-                string[] parts = line.Split();
-
-                string type = parts[0];
+                string[] data = line.Split();
+                string type = data[0];
 
                 if (type == nameof(Citizen))
                 {
-                    string name = parts[1];
-                    int age = int.Parse(parts[2]);
-                    string id = parts[3];
-                    string bithdate = parts[4];
+                    string name = data[1];
+                    int age = int.Parse(data[2]);
+                    string id = data[3];
+                    string birthdate = data[4];
 
-                    birthable.Add(new Citizen(name, age, id, bithdate));
+                    birthables.Add(new Citizen(name, age, id, birthdate));
                 }
-                else if (type == nameof(Pet))
+                else if(type == nameof(Pet))
                 {
-                    string name = parts[1];
-                    string bithdate = parts[2];
+                    string name = data[1];
+                    string birthdate = data[2];
 
-                    birthable.Add(new Pet(name, bithdate));
+                    birthables.Add(new Pet(name, birthdate));
                 }
             }
 
-            string filterYear = Console.ReadLine();
+            string criteriaBirthdate = Console.ReadLine();
 
-            List<IBirthable> filtred = birthable.Where(i => i.Birthdate.EndsWith(filterYear)).ToList();
+            List<IBirthable> result = birthables.Where(i => i.Birthdate.EndsWith(criteriaBirthdate)).ToList();
 
-            foreach (var birthab in filtred)
+            foreach (var item in result)
             {
-                Console.WriteLine(birthab.Birthdate);
+                Console.WriteLine(item.Birthdate);
             }
         }
     }
