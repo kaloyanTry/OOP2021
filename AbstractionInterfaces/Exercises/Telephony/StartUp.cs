@@ -7,9 +7,9 @@ namespace Telephony
         static void Main(string[] args)
         {
             string[] numbers = Console.ReadLine().Split();
-            string[] url = Console.ReadLine().Split();
+            string[] urls = Console.ReadLine().Split();
 
-            SmaptPhone smartPhone = new SmaptPhone();
+            SmartPhone smartPhone = new SmartPhone();
             StationaryPhone stationaryPhone = new StationaryPhone();
 
             foreach (var number in numbers)
@@ -29,11 +29,11 @@ namespace Telephony
 
             }
 
-            foreach (var currentUrl in url)
+            foreach (var url in urls)
             {
                 try
                 {
-                    string result = smartPhone.Browse(currentUrl);
+                    string result = smartPhone.Browse(url);
                     Console.WriteLine(result);
                 }
                 catch (InvalidOperationException ex)
