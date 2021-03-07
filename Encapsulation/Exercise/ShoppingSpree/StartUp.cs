@@ -8,18 +8,18 @@ namespace Spree
     {
         static void Main(string[] args)
         {
-            List<Person> people = new List<Person>();
+            List<Person> persons = new List<Person>();
 
-            string[] personTokens = Console.ReadLine().Split(new char[] { '=', ';' }, StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < personTokens.Length; i += 2)
+            string[] inputPersons = Console.ReadLine().Split(new char[] { '=', ';' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < inputPersons.Length; i += 2)
             {
-                string name = personTokens[i];
-                decimal money = decimal.Parse(personTokens[i + 1]);
+                string name = inputPersons[i];
+                decimal money = decimal.Parse(inputPersons[i + 1]);
 
                 try
                 {
                     Person person = new Person(name, money);
-                    people.Add(person);
+                    persons.Add(person);
                 }
                 catch (ArgumentException ex)
                 {
@@ -30,14 +30,15 @@ namespace Spree
 
             List<Product> products = new List<Product>();
 
-            string[] productTokens = Console.ReadLine().Split(new char[] { '=', ';' }, StringSplitOptions.RemoveEmptyEntries);
-            for (int i = 0; i < productTokens.Length; i += 2)
+            string[] inputProducts = Console.ReadLine().Split(new char[] { ';', '=' }, StringSplitOptions.RemoveEmptyEntries);
+            for (int i = 0; i < inputProducts.Length; i += 2)
             {
-                string givenProduct = productTokens[i];
-                decimal cost = decimal.Parse(productTokens[i + 1]);
+                string name = inputProducts[i];
+                decimal cost = decimal.Parse(inputProducts[i + 1]);
+
                 try
                 {
-                    Product product = new Product(givenProduct, cost);
+                    Product product = new Product(name, cost);
                     products.Add(product);
                 }
                 catch (ArgumentException ex)
@@ -47,19 +48,20 @@ namespace Spree
                 }
             }
 
-            string[] order = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
-            while (order[0] != "END")
+            string[] inputOrder = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+            while (inputOrder[0] != "END")
             {
-                string name = order[0];
-                string orderedProduct = order[1];
+                string ordererName = inputOrder[0];
+                string orderedProduct = inputOrder[1];
 
                 Product product = products.FirstOrDefault(p => p.Name == orderedProduct);
-                people.FirstOrDefault(p => p.Name == name).AddProduct(product);
 
-                order = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
+                persons.FirstOrDefault(p => p.Name == ordererName).AddProduct(product);
+
+                inputOrder = Console.ReadLine().Split(' ', StringSplitOptions.RemoveEmptyEntries);
             }
 
-            foreach (Person person in people)
+            foreach (Person person in persons)
             {
                 Console.WriteLine(person.ToString());
             }

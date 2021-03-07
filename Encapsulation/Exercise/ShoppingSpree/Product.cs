@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Spree
 {
@@ -15,9 +13,9 @@ namespace Spree
             Cost = cost;
         }
 
-        public string Name
-        {
-            get => name; 
+        public string Name 
+        { 
+            get { return name; }
             private set
             {
                 if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
@@ -27,9 +25,10 @@ namespace Spree
                 name = value;
             }
         }
-        public decimal Cost
+
+        public decimal Cost 
         {
-            get => cost; 
+            get { return cost; } 
             private set
             {
                 if (value < 0)
