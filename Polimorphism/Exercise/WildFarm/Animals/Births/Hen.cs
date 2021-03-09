@@ -20,6 +20,5 @@ namespace WildFarm.Animals.Births
         {
             return "Hoot Hoot";
         }
-
     }
 }
