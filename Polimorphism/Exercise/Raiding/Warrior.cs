@@ -1,4 +1,8 @@
-﻿namespace ExerciseRaiding
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace Raiding
 {
     public class Warrior : BaseHero
     {
@@ -9,7 +13,7 @@
 
         public override string CastAbillity()
         {
-            return$"{nameof(Warrior)} - {Name} hit for {Power} damage" ;
+            return $"{nameof(Warrior)} - {Name} hit for {Power} damage";
         }
     }
 }

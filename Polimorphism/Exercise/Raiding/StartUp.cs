@@ -1,22 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ExerciseRaiding
+namespace Raiding
 {
     public class StartUp
     {
         static void Main(string[] args)
         {
             List<BaseHero> heroes = new List<BaseHero>();
-            int n = int.Parse(Console.ReadLine());
 
+            int n = int.Parse(Console.ReadLine());
             while (heroes.Count < n)
             {
                 string name = Console.ReadLine();
                 string type = Console.ReadLine();
 
                 BaseHero hero = CreateHero(type, name);
-
                 if (hero == null)
                 {
                     Console.WriteLine("Invalid hero!");
@@ -25,16 +24,16 @@ namespace ExerciseRaiding
 
                 heroes.Add(hero);
             }
+            int bossPower = int.Parse(Console.ReadLine());
+            int totalPowerHeroes = 0;
 
-            int bossHealthPoints = int.Parse(Console.ReadLine());
-
-            foreach (var hero in heroes)
+            foreach (var her in heroes)
             {
-                Console.WriteLine(hero.CastAbillity());
-                bossHealthPoints -= hero.Power;
+                Console.WriteLine(her.CastAbillity());
+                totalPowerHeroes += her.Power;
             }
 
-            if (bossHealthPoints <= 0)
+            if (totalPowerHeroes >= bossPower)
             {
                 Console.WriteLine("Victory!");
             }
@@ -42,7 +41,6 @@ namespace ExerciseRaiding
             {
                 Console.WriteLine("Defeat...");
             }
-
         }
 
         private static BaseHero CreateHero(string type, string name)
