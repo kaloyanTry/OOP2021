@@ -1,10 +1,10 @@
-﻿using ExerciseWildFarm.Animals;
+﻿using System;
+using System.Collections.Generic;
+using ExerciseWildFarm.Animals;
 using ExerciseWildFarm.Animals.Birds;
 using ExerciseWildFarm.Animals.Mammals;
 using ExerciseWildFarm.Animals.Mammals.Felines;
 using ExerciseWildFarm.Foods;
-using System;
-using System.Collections.Generic;
 
 namespace ExerciseWildFarm
 {
