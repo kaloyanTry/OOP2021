@@ -59,7 +59,6 @@ namespace ExerciseVehicles
         private static Vehicle CreateVehicle()
         {
             string[] parts = Console.ReadLine().Split();
-
             string type = parts[0];
             double fuelQuantity = double.Parse(parts[1]);
             double fuelConsumption = double.Parse(parts[2]);
