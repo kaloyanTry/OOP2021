@@ -11,7 +11,6 @@ namespace ExerciseVehicles
         public Car(double fuel, double fuelConsumption)
             : base(fuel, fuelConsumption, CarAirModifier)
         {
-
         }
     }
 }
