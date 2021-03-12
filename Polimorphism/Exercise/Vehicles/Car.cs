@@ -2,14 +2,13 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ExerciseVehicles
+namespace Vehicles
 {
     public class Car : Vehicle
     {
         private const double CarAirModifier = 0.9;
-
-        public Car(double fuel, double fuelConsumption)
-            : base(fuel, fuelConsumption, CarAirModifier)
+        public Car(double fuelQuantity, double fuelConsumption) 
+            : base(fuelQuantity, fuelConsumption, CarAirModifier)
         {
         }
     }

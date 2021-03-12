@@ -1,22 +1,21 @@
 ﻿using System;
 
-namespace ExerciseVehicles
+namespace Vehicles
 {
     public class StartUp
     {
-        public static void Main(string[] args)
+        static void Main(string[] args)
         {
-            Vehicle car = CreateVehicle();
-            Vehicle truck = CreateVehicle();
+            Vehicle car = CreateVehice();
+            Vehicle truck = CreateVehice();
 
             int n = int.Parse(Console.ReadLine());
             for (int i = 0; i < n; i++)
             {
-                string[] parts = Console.ReadLine().Split();
-
-                string command = parts[0];
-                string vehicleType = parts[1];
-                double parameter = double.Parse(parts[2]);
+                string[] input = Console.ReadLine().Split();
+                string command = input[0];
+                string vehicleType = input[1];
+                double parameter = double.Parse(input[2]);
 
                 if (command == "Drive")
                 {
@@ -24,15 +23,13 @@ namespace ExerciseVehicles
                     {
                         if (vehicleType == nameof(Car))
                         {
-                            car.Drive(parameter);
+                            car.DriveDistance(parameter);
                         }
                         else
                         {
-                            truck.Drive(parameter);
+                            truck.DriveDistance(parameter);
                         }
-
                         Console.WriteLine($"{vehicleType} travelled {parameter} km");
-
                     }
                     catch (InvalidOperationException ex)
                     {
@@ -56,25 +53,24 @@ namespace ExerciseVehicles
             Console.WriteLine(truck);
         }
 
-        private static Vehicle CreateVehicle()
+        private static Vehicle CreateVehice()
         {
-            string[] parts = Console.ReadLine().Split();
-            string type = parts[0];
-            double fuelQuantity = double.Parse(parts[1]);
-            double fuelConsumption = double.Parse(parts[2]);
+            string[] infoVehicle = Console.ReadLine().Split();
+
+            string vehicleType = infoVehicle[0];
+            double fuelQuantity = double.Parse(infoVehicle[1]);
+            double fuelConsumption = double.Parse(infoVehicle[2]);
 
             Vehicle vehicle = null;
-
-            if (type == nameof(Car))
+            if (vehicleType == nameof(Car))
             {
                 vehicle = new Car(fuelQuantity, fuelConsumption);
-
             }
-            else if (type == nameof(Truck))
+            else if (vehicleType == nameof(Truck))
             {
                 vehicle = new Truck(fuelQuantity, fuelConsumption);
-
             }
+
             return vehicle;
         }
     }

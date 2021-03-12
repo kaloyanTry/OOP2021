@@ -1,42 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ExerciseVehicles
+namespace Vehicles
 {
     public abstract class Vehicle
     {
-        protected Vehicle(double fuel, double fuelConsumption, double airConditionerModifier)
+        protected Vehicle(double fuelQuantity, double fuelConsumption, double airConditionerModifier)
         {
-            Fuel = fuel;
+            FuelQuantity = fuelQuantity;
             FuelConsumption = fuelConsumption;
             AirConditionerModifier = airConditionerModifier;
         }
+
         private double AirConditionerModifier { get; set; }
-
-        public double Fuel { get; private set; }
-
+        public double FuelQuantity { get; private set; }
         public double FuelConsumption { get; private set; }
 
-        public void Drive(double distance)
+        public void DriveDistance(double distance)
         {
-            double requiredFuel = (FuelConsumption+ AirConditionerModifier) * distance;
+            double fuelRequired = (FuelConsumption + AirConditionerModifier) * distance;
 
-            if (requiredFuel > this.Fuel)
+            if (fuelRequired > FuelQuantity)
             {
                 throw new InvalidOperationException($"{GetType().Name} needs refueling");
             }
-            Fuel -= requiredFuel;
+
+            FuelQuantity -= fuelRequired;
         }
 
         public virtual void Refuel(double amount)
         {
-            Fuel += amount;
+            FuelQuantity += amount;
         }
 
         public override string ToString()
         {
-            return $"{GetType().Name}: {Fuel:F2}";
+            return $"{GetType().Name}: {FuelQuantity:F2}";
         }
     }
 }
