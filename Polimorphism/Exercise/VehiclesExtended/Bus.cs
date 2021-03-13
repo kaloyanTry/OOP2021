@@ -1,25 +1,24 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ExerciseVehicles
+namespace _1.Vehicles
 {
     public class Bus : Vehicle
     {
         private const double BusAirModifier = 1.4;
-
-        public Bus (double fuel, double fuelConsumption, double tankCapacity) : base(fuel, fuelConsumption, tankCapacity, BusAirModifier)
+        public Bus(double fuelQuantity, double fuelConsumption, double tankCapacity) 
+            : base(fuelQuantity, fuelConsumption, tankCapacity, BusAirModifier)
         {
         }
+
         public void DriveEmpty(double distance)
         {
-            double requiredFuel = FuelConsumption * distance;
+            double fuelNeeded = FuelConsumption * distance;
 
-            if (requiredFuel > Fuel)
+            if (fuelNeeded > FuelQuantity)
             {
                 throw new InvalidOperationException($"{GetType().Name} needs refueling");
             }
-            Fuel -= requiredFuel;
+            FuelQuantity -= fuelNeeded;
         }
     }
 }

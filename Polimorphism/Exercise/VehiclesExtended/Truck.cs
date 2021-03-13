@@ -1,32 +1,27 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ExerciseVehicles
+namespace _1.Vehicles
 {
     public class Truck : Vehicle
     {
-        private const double TruckAirModifier =  1.6;
-
-        public Truck(double fuel, double fuelConsumption, double tankCapacity)
-            : base(fuel, fuelConsumption, tankCapacity, TruckAirModifier)
+        private const double TruckAirModifier = 1.6;
+        public Truck(double fuelQuantity, double fuelConsumption, double tankCapacity) : base(fuelQuantity, fuelConsumption, tankCapacity, TruckAirModifier)
         {
-
         }
 
-        public override void Refuel(double amount)
+        public override void Refuel(double liters)
         {
-            if (amount <= 0)
+            if (liters <= 0)
             {
                 throw new ArgumentException("Fuel must be a positive number");
             }
 
-            if (Fuel + amount > TankCapacity)
+            if (FuelQuantity + liters > TankCapacity)
             {
-                throw new InvalidOperationException($"Cannot fit {amount} fuel in the tank");
+                throw new InvalidOperationException($"Cannot fit {liters} fuel in the tank");
             }
-            Fuel += amount * 0.95;
-        }
 
+            FuelQuantity += liters * 0.95;
+        }
     }
 }

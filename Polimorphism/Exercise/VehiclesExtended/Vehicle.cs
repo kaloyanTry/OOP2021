@@ -1,24 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace ExerciseVehicles
+namespace _1.Vehicles
 {
     public abstract class Vehicle
     {
         private double fuel;
-        protected Vehicle(double fuel, double fuelConsumption, double tankCapacity, double airConditionerModifier)
+        protected Vehicle(double fuelQuantity, double fuelConsumption, double tankCapacity, double airModifier)
         {
             TankCapacity = tankCapacity;
-            Fuel = fuel;
+            FuelQuantity = fuelQuantity;
             FuelConsumption = fuelConsumption;
-            AirConditionerModifier = airConditionerModifier;
+            AirModifier = airModifier;
         }
-        private double AirConditionerModifier { get; set; }
-
-        public double Fuel 
+        private double AirModifier { get; set; }
+        public double FuelQuantity 
         { 
-            get => fuel; 
+            get => fuel;
             protected set
             {
                 if (value > TankCapacity)
@@ -31,39 +28,37 @@ namespace ExerciseVehicles
                 }
             }
         }
-
         public double FuelConsumption { get; private set; }
-
         public double TankCapacity { get; private set; }
 
-        public void Drive(double distance)
+        public void Drive (double distance)
         {
-            double requiredFuel = (FuelConsumption + AirConditionerModifier) * distance;
-
-            if (requiredFuel > Fuel)
+            double fuelNeeded = (FuelConsumption + AirModifier) * distance;
+            if (FuelQuantity < fuelNeeded)
             {
                 throw new InvalidOperationException($"{GetType().Name} needs refueling");
             }
-            Fuel -= requiredFuel;
+            FuelQuantity -= fuelNeeded;
         }
 
-        public virtual void Refuel(double amount)
+        public virtual void Refuel(double liters)
         {
-            if (amount <= 0)
+            if (liters <= 0)
             {
                 throw new ArgumentException("Fuel must be a positive number");
             }
 
-            if (Fuel + amount > TankCapacity)
+            if (FuelQuantity + liters > TankCapacity)
             {
-                throw new InvalidOperationException($"Cannot fit {amount} fuel in the tank");
+                throw new InvalidOperationException($"Cannot fit {liters} fuel in the tank");
             }
-            Fuel += amount;
+
+            FuelQuantity += liters;
         }
 
         public override string ToString()
         {
-            return $"{GetType().Name}: {Fuel:F2}";
+            return $"{GetType().Name}: {FuelQuantity:F2}"; 
         }
     }
 }

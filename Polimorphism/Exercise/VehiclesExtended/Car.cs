@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace ExerciseVehicles
+﻿namespace _1.Vehicles
 {
     public class Car : Vehicle
     {
         private const double CarAirModifier = 0.9;
-
-        public Car(double fuel, double fuelConsumption, double tankCapacity)
-            : base(fuel, fuelConsumption, tankCapacity, CarAirModifier)
+        public Car(double fuelQuantity, double fuelConsumption, double tankCapacity) 
+            : base(fuelQuantity, fuelConsumption, tankCapacity, CarAirModifier)
         {
-
         }
     }
 }
