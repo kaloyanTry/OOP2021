@@ -19,7 +19,7 @@ namespace P03.DetailPrinter
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine(base.ToString());
-            sb.AppendLine($"Documents: {String.Join(", ", Documents)}");
+            sb.AppendLine($"{Name}'s Documents: {String.Join(", ", Documents)}");
 
             return sb.ToString().TrimEnd();
         }
