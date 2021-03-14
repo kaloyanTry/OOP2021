@@ -7,8 +7,8 @@
         public File(string name, int length, int bytesSent)
         {
             this.name = name;
-            this.Length = length;
-            this.BytesSent = bytesSent;
+            Length = length;
+            BytesSent = bytesSent;
         }
 
         public int Length { get; set; }
