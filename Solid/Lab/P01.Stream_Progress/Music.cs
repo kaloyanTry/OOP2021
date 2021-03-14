@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace P01.Stream_Progress
+﻿namespace P01.Stream_Progress
 {
     public class Music : IStreamable
     {
@@ -13,8 +9,8 @@ namespace P01.Stream_Progress
         {
             this.artist = artist;
             this.album = album;
-            this.Length = length;
-            this.BytesSent = bytesSent;
+            Length = length;
+            BytesSent = bytesSent;
         }
 
         public int Length { get; set; }
