@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Raiding
+﻿namespace RaidingExcercise
 {
     public class Druid : BaseHero
     {
@@ -11,7 +7,7 @@ namespace Raiding
         {
         }
 
-        public override string CastAbillity()
+        public override string CastAbility()
         {
             return $"{nameof(Druid)} - {Name} healed for {Power}";
         }

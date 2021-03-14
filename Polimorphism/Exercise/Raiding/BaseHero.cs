@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Raiding
+﻿namespace RaidingExcercise
 {
     public abstract class BaseHero
     {
@@ -12,9 +8,9 @@ namespace Raiding
             Power = power;
         }
 
-        public string Name { get; private set; }
-        public int Power { get; private set; }
+        public string Name { get; set; }
+        public int Power { get; set; }
 
-        public abstract string CastAbillity();
+        public abstract string CastAbility();
     }
 }

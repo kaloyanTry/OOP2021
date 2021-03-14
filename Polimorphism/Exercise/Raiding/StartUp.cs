@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace Raiding
+namespace RaidingExcercise
 {
     public class StartUp
     {
@@ -16,6 +16,7 @@ namespace Raiding
                 string type = Console.ReadLine();
 
                 BaseHero hero = CreateHero(type, name);
+
                 if (hero == null)
                 {
                     Console.WriteLine("Invalid hero!");
@@ -24,16 +25,17 @@ namespace Raiding
 
                 heroes.Add(hero);
             }
-            int bossPower = int.Parse(Console.ReadLine());
-            int totalPowerHeroes = 0;
 
-            foreach (var her in heroes)
+            int bossPower = int.Parse(Console.ReadLine());
+            int totalWariorsPower = 0;
+
+            foreach (var hero in heroes)
             {
-                Console.WriteLine(her.CastAbillity());
-                totalPowerHeroes += her.Power;
+                Console.WriteLine(hero.CastAbility());
+                totalWariorsPower += hero.Power;
             }
 
-            if (totalPowerHeroes >= bossPower)
+            if (totalWariorsPower >= bossPower)
             {
                 Console.WriteLine("Victory!");
             }
@@ -46,7 +48,6 @@ namespace Raiding
         private static BaseHero CreateHero(string type, string name)
         {
             BaseHero hero = null;
-
             if (type == nameof(Druid))
             {
                 hero = new Druid(name);
