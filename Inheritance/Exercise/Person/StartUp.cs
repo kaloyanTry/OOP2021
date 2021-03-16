@@ -11,6 +11,7 @@ namespace Person
 
             Child child = new Child(name, age);
             Console.WriteLine(child);
+
         }
     }
 }
