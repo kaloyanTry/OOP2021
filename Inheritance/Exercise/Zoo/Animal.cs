@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Zoo
+﻿namespace Zoo
 {
     public class Animal
     {
@@ -10,6 +6,7 @@ namespace Zoo
         {
             Name = name;
         }
+
         public string Name { get; set; }
     }
 }
