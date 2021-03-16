@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Restaurant
+﻿namespace Restaurant
 {
     public class Food : Product
     {
-        public Food(string name, decimal price, double grams) : base(name, price)
+        public Food(string name, decimal price, double grams) 
+            : base(name, price)
         {
             Grams = grams;
         }

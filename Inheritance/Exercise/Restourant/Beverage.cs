@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Restaurant
+﻿namespace Restaurant
 {
     public class Beverage : Product
     {
@@ -12,6 +8,6 @@ namespace Restaurant
             Milliliters = milliliters;
         }
 
-        public double Milliliters { get; set; }
+        double Milliliters { get; set; }
     }
 }

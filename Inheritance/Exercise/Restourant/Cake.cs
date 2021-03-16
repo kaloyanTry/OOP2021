@@ -1,15 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Restaurant
+﻿namespace Restaurant
 {
     public class Cake : Dessert
     {
-        private const decimal DefaultPrice = 5;
-        private const double DefaultGrams = 250;
-        private const double DefaultCalories = 1000;
-        public Cake(string name) : base(name, DefaultPrice, DefaultGrams, DefaultCalories)
+        private const double CakeGrams = 250;
+        private const double CakeCalories = 1000;
+        private const decimal CakePrice = 5;
+        public Cake(string name) 
+            : base(name, CakePrice, CakeGrams, CakeCalories)
         {
         }
     }

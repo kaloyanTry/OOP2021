@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Restaurant
+﻿namespace Restaurant
 {
     public class Soup : Starter
     {
