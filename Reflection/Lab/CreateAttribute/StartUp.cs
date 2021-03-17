@@ -8,8 +8,7 @@ namespace AuthorProblem
         [AuthorAttribute("Georgi")]
         static void Main(string[] args)
         {
-            var tracer = new Tracker();
-            tracer.PrintMethodsByAuthor();
+           
         }
     }
 }
