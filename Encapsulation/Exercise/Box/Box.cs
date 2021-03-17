@@ -1,8 +1,7 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Text;
 
-namespace Box
+namespace _1.ClassBoxData
 {
     public class Box
     {
@@ -17,15 +16,14 @@ namespace Box
             Height = height;
         }
 
-
-        public double Length 
+        public double Length
         {
-            get => length; 
+            get => length;
             private set
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentException($"Length cannot be zero or negative.");
+                    throw new ArgumentException("Length cannot be zero or negative.");
                 }
                 length = value;
             }
@@ -59,15 +57,14 @@ namespace Box
 
         public double CalculateSurfaceArea()
         {
-            return 2.0 * Length * Width + 2.0 * Length * Width + 2.0 * Length * Width;
+            return 2.0 * Length * Width + 2.0 * Length * Height + 2.0 * Width * Height;
         }
 
-        public double CalculateLiteralArea()
+        public double CalculateLateralSurfaceArea()
         {
-            return 2.0 * Length * Width + 2.0 * Length * Width;
+            return 2.0 * Length * Height + 2.0 * Width * Height;
         }
-
-        public double CalculateVolume()
+        public double CalculateValume()
         {
             return Length * Width * Height;
         }
@@ -76,10 +73,10 @@ namespace Box
         {
             StringBuilder sb = new StringBuilder();
             sb.AppendLine($"Surface Area - {CalculateSurfaceArea():F2}");
-            sb.AppendLine($"Lateral Surface Area - {CalculateLiteralArea():F2}");
-            sb.AppendLine($"Volume - {CalculateVolume():F2}");
+            sb.AppendLine($"Lateral Surface Area - {CalculateLateralSurfaceArea():F2}");
+            sb.AppendLine($"Volume - {CalculateValume():F2}");
 
-            return sb.ToString().Trim();
+            return sb.ToString().TrimEnd();
         }
     }
 }

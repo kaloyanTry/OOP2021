@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace Box
+namespace _1.ClassBoxData
 {
-    public class Program
+    class Program
     {
         static void Main(string[] args)
         {
