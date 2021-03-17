@@ -1,14 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Animals
+﻿namespace Animals
 {
     public class Kitten : Cat
     {
-        private const string DefaultGender = "Female";
+        private const string KittenGender = "Female";
         public Kitten(string name, int age) 
-            : base(name, age, DefaultGender)
+            : base(name, age, KittenGender)
         {
         }
 

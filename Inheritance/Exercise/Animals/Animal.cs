@@ -1,6 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace Animals
 {
@@ -17,14 +15,14 @@ namespace Animals
         public int Age { get; set; }
         public string Gender { get; set; }
 
-        public virtual string ProduceSound ()
+        public virtual string ProduceSound()
         {
             return string.Empty;
         }
 
         public override string ToString()
         {
-            return this.GetType().Name +
+            return GetType().Name +
                 Environment.NewLine +
                 $"{Name} {Age} {Gender}";
         }

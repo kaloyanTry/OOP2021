@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace Animals
+﻿namespace Animals
 {
     public class Dog : Animal
     {
@@ -10,6 +6,7 @@ namespace Animals
             : base(name, age, gender)
         {
         }
+
         public override string ProduceSound()
         {
             return "Woof!";
