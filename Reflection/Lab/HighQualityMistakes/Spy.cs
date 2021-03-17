@@ -30,7 +30,7 @@ using System.Text;
                 sb.AppendLine($"{method.Name} have to be public!");
             }
 
-            foreach (MethodInfo method in classPublicMethods.Where(m => m.Name.StartsWith("set")))
+            foreach (MethodInfo method in classNonPublicMethods.Where(m => m.Name.StartsWith("set")))
             {
                 sb.AppendLine($"{method.Name} have to be private!");
             }
