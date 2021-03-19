@@ -1,8 +1,6 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Pizza
+namespace PizzaCalories
 {
     public class Dough
     {
@@ -10,16 +8,16 @@ namespace Pizza
         private string bakingTechnique;
         private double weight;
 
-        public Dough(string flourType, string bakingTechnique, double weight)
+        public Dough(string flourType, string backingTechnique, double weight)
         {
-            this.FlourType = flourType;
-            this.BakingTechnique = bakingTechnique;
-            this.Weight = weight;
+            FlourType = flourType;
+            BackingTechnique = backingTechnique;
+            Weight = weight;
         }
 
         public string FlourType
         {
-            get { return this.flourType; }
+            get => flourType;
             private set
             {
                 string flour = value.ToLower();
@@ -27,12 +25,12 @@ namespace Pizza
                 {
                     throw new ArgumentException("Invalid type of dough.");
                 }
-                this.flourType = value.ToLower();
+                flourType = value.ToLower();
             }
         }
-        public string BakingTechnique
+        public string BackingTechnique
         {
-            get { return this.bakingTechnique; }
+            get => bakingTechnique; 
             private set
             {
                 string technique = value.ToLower();
@@ -40,54 +38,56 @@ namespace Pizza
                 {
                     throw new ArgumentException("Invalid type of dough.");
                 }
-                this.bakingTechnique = value.ToLower();
+                bakingTechnique = value.ToLower();
             }
         }
+
         public double Weight
         {
-            get { return this.weight; }
+            get => weight;
             private set
             {
                 if (value <= 0 || value > 200)
                 {
-                    throw new ArgumentException("Dough weight should be in the range [1..200].");
+                    Console.WriteLine("Dough weight should be in the range [1..200].");
                 }
-                this.weight = value;
+                weight = value;
             }
         }
+
         public double Calories
         {
-            get { return this.GetCalories(); }
+            get => GetCalories();
         }
 
         private double GetCalories()
         {
             double flourModifier = 0;
-            switch (this.FlourType)
+
+            if (FlourType == "white")
             {
-                case "white":
-                    flourModifier = 1.5;
-                    break;
-                case "wholegrain":
-                    flourModifier = 1.0;
-                    break;
+                flourModifier = 1.5;
+            }
+            else if (FlourType == "wholegrain")
+            {
+                flourModifier = 1.0;
             }
 
-            double bakingTechniqueModifier = 0;
-            switch (this.BakingTechnique)
+            double backingModifier = 0;
+            if (BackingTechnique == "crispy")
             {
-                case "crispy":
-                    bakingTechniqueModifier = 0.9;
-                    break;
-                case "chewy":
-                    bakingTechniqueModifier = 1.1;
-                    break;
-                case "homemade":
-                    bakingTechniqueModifier = 1.0;
-                    break;
+                backingModifier = 0.9;
+            }
+            else if (BackingTechnique == "chewy")
+            {
+                backingModifier = 1.1;
+            }
+            else if (BackingTechnique == "homemade")
+            {
+                backingModifier = 1.0;
             }
 
-            return (2 * this.Weight) * flourModifier * bakingTechniqueModifier;
+            return (2 * Weight) * flourModifier * backingModifier;
         }
     }
 }

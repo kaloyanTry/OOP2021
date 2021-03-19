@@ -2,59 +2,63 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace Pizza
+namespace PizzaCalories
 {
     public class Pizza
     {
-        private string name;
-        private Dough dough;
-        private List<Topping> toppings;
+        private string namePizza;
+        private Dough doughPizza;
+        private List<Topping> toppingsPizza;
 
-        public Pizza(string name)
+        public Pizza(string namePizza)
         {
-            Name = name;
-            Toppings = new List<Topping>();
+            NamePizza = namePizza;
+            ToppingsPizza = new List<Topping>();
         }
 
-        public string Name
-        {
-            get { return name; }
+        public string NamePizza 
+        { 
+            get => namePizza;
             private set
             {
-                if (String.IsNullOrEmpty(value) || value.Length > 15)
+                if (string.IsNullOrEmpty(value) || value.Length > 15)
                 {
                     throw new ArgumentException("Pizza name should be between 1 and 15 symbols.");
                 }
-                name = value;
+                namePizza = value;
             }
         }
-        public Dough Dough
+        public Dough DoughPizza
         {
-            get { return dough; }
-            set { dough = value; }
+            get => doughPizza; 
+            set => doughPizza = value;
         }
-        public List<Topping> Toppings
+
+        public List<Topping> ToppingsPizza
         {
-            get { return toppings; }
-            private set { toppings = value; }
+            get => toppingsPizza;
+            private set { toppingsPizza = value; }
         }
 
         public void AddTopping(Topping topping)
         {
-            if (Toppings.Count > 9)
+            if (ToppingsPizza.Count >= 10)
             {
                 throw new ArgumentException("Number of toppings should be in range [0..10].");
             }
-            Toppings.Add(topping);
+            ToppingsPizza.Add(topping);
         }
 
-        private double Calories()
+        public double CaloriesPizza()
         {
-            return Dough.Calories + Toppings.Sum(t => t.Calories);
+            double caloriesTotal = DoughPizza.Calories + ToppingsPizza.Sum(t => t.Calories);
+
+            return caloriesTotal;
         }
+
         public override string ToString()
         {
-            return $"{Name} - {Calories():F2} Calories.";
+            return $"{NamePizza} - {CaloriesPizza():F2} Calories.";
         }
     }
 }

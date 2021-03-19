@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 
-namespace Pizza
+namespace PizzaCalories
 {
     public class Topping
     {
-        private string toppingType;
+        private string toppingTypes;
         private double weight;
 
         public Topping(string toppingType, double weight)
@@ -14,22 +12,25 @@ namespace Pizza
             ToppingType = toppingType;
             Weight = weight;
         }
-        public string ToppingType
+
+        public string ToppingType 
         {
-            get { return toppingType; }
+            get => toppingTypes;
             private set
             {
-                string topping = value.ToLower();
-                if (topping != "meat" && topping != "veggies" && topping != "cheese" && topping != "sauce")
+                string toppingLower = value.ToLower();
+                if (toppingLower != "meat" && toppingLower != "veggies" && toppingLower != "cheese" && toppingLower != "sauce")
                 {
                     throw new ArgumentException($"Cannot place {value} on top of your pizza.");
                 }
-                toppingType = value.ToLower();
-            }
+                toppingTypes = value.ToLower();
+
+            } 
         }
+
         public double Weight
         {
-            get { return weight; }
+            get => weight;
             private set
             {
                 if (value <= 0 || value > 50)
@@ -38,33 +39,33 @@ namespace Pizza
                     throw new ArgumentException($"{type} weight should be in the range [1..50].");
                 }
                 weight = value;
-            }
+            }           
         }
-        public double Calories
-        {
-            get { return this.GetCalories(); }
-        }
+
+        public double Calories { get => GetCalories();  }
 
         private double GetCalories()
         {
             double toppingModifier = 0;
-            switch (ToppingType)
+
+            if (ToppingType == "meat")
             {
-                case "meat":
-                    toppingModifier = 1.2;
-                    break;
-                case "veggies":
-                    toppingModifier = 0.8;
-                    break;
-                case "cheese":
-                    toppingModifier = 1.1;
-                    break;
-                case "sauce":
-                    toppingModifier = 0.9;
-                    break;
+                toppingModifier = 1.2;
+            }
+            else if (ToppingType == "veggies")
+            {
+                toppingModifier = 0.8;
+            }
+            else if (ToppingType == "cheese")
+            {
+                toppingModifier = 1.1;
+            }
+            else if (ToppingType == "sauce")
+            {
+                toppingModifier = 0.9;
             }
 
-            return 2 * (Weight * toppingModifier);
+            return 2 * (toppingModifier * Weight);
         }
     }
 }
