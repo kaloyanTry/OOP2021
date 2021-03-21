@@ -1,8 +1,8 @@
-﻿namespace PersonInfo
+﻿namespace IPerson
 {
     public interface IPerson
     {
-        public string Name { get; }
-        public int Age { get; }
+        string Name { get; }
+        int Age { get; }
     }
 }
