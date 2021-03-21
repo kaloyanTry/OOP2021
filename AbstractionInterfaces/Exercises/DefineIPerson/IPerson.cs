@@ -1,12 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace PersonInfo
+﻿namespace IPerson
 {
     public interface IPerson
     {
-        public string Name { get; set; }
-        public int Age { get; set; }
+        string Name { get; set; }
+        int Age { get; set; }
     }
 }
