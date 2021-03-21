@@ -42,6 +42,7 @@ namespace FootbalTeamGenerator
                     throw new ArgumentException("Sprint should be between 0 and 100.");
                 }
                 sprint = value;
+                value = value;
             }
         }
 
