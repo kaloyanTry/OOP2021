@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace FootbalTeamGenerator
+namespace TeamGenerator
 {
     public class Stats
     {
@@ -19,9 +19,9 @@ namespace FootbalTeamGenerator
             Shooting = shooting;
         }
 
-        public int Endurance
-        {
-            get => endurance;
+        public int Endurance 
+        { 
+            get => endurance; 
             private set
             {
                 if (value < 0 || value > 100)
@@ -32,9 +32,9 @@ namespace FootbalTeamGenerator
             }
         }
 
-        public int Sprint
-        {
-            get => sprint;
+        public int Sprint 
+        { 
+            get => sprint; 
             private set
             {
                 if (value < 0 || value > 100)
@@ -42,13 +42,12 @@ namespace FootbalTeamGenerator
                     throw new ArgumentException("Sprint should be between 0 and 100.");
                 }
                 sprint = value;
-                value = value;
-            }
+            } 
         }
 
-        public int Dribble
-        {
-            get => dribble;
+        public int Dribble 
+        { 
+            get => dribble; 
             private set
             {
                 if (value < 0 || value > 100)
@@ -56,7 +55,7 @@ namespace FootbalTeamGenerator
                     throw new ArgumentException("Dribble should be between 0 and 100.");
                 }
                 dribble = value;
-            }
+            } 
         }
 
         public int Passing
@@ -72,9 +71,9 @@ namespace FootbalTeamGenerator
             }
         }
 
-        public int Shooting
-        {
-            get => shooting;
+        public int Shooting 
+        { 
+            get => shooting; 
             private set
             {
                 if (value < 0 || value > 100)
