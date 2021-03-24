@@ -12,9 +12,10 @@ namespace Tests
         [SetUp]
         public void Setup()
         {
-            car = new Car("Make,", "Model", 10, 100);
+            car = new Car("Make", "Model", 10, 100);
         }
 
+        //--Ctor tests--
         [Test]
         [TestCase("", "Model", 10, 100)]
         [TestCase(null, "Model", 10, 100)]
@@ -44,6 +45,7 @@ namespace Tests
             Assert.That(car.FuelCapacity, Is.EqualTo(fuelCapacity));
         }
 
+        //--Methods tests--
         [Test]
         [TestCase(0)]
         [TestCase(-20)]
@@ -86,18 +88,6 @@ namespace Tests
             car.Drive(100);
 
             Assert.That(car.FuelAmount, Is.EqualTo(initialFuel - car.FuelConsumption));
-        }
-
-        [Test]
-        public void Drive_DecreasesFuelAmountToZero_WhenRequiredFuelIsEqualToFuelAmount()
-        {
-            car.Refuel(car.FuelCapacity);
-
-            double distance = car.FuelCapacity * car.FuelConsumption;
-
-            car.Drive(distance);
-
-            Assert.That(car.FuelAmount, Is.EqualTo(0));
         }
 
         [Test]
