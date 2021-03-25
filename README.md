@@ -1,5 +1,5 @@
 # OOPCSharp
-OOP Course with C#
+OOP Course with C# //SoftUni
 
 1. Inferitance: Lab and Exercises [link](https://github.com/kaloyanTry/OOP2021/tree/main/Inheritance)
 2. Encapsulation: Lab and Exercises [link](https://github.com/kaloyanTry/OOP2021/tree/main/Encapsulation)
