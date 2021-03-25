@@ -1,0 +1,13 @@
+D:\Kaloyan\C#\SoftUni\2021OOPC#\10.MokingTestDriven\Chainblock - Skeleton\Chainblock\bin\Debug\netcoreapp3.1\Chainblock.exe
+D:\Kaloyan\C#\SoftUni\2021OOPC#\10.MokingTestDriven\Chainblock - Skeleton\Chainblock\bin\Debug\netcoreapp3.1\Chainblock.deps.json
+D:\Kaloyan\C#\SoftUni\2021OOPC#\10.MokingTestDriven\Chainblock - Skeleton\Chainblock\bin\Debug\netcoreapp3.1\Chainblock.runtimeconfig.json
+D:\Kaloyan\C#\SoftUni\2021OOPC#\10.MokingTestDriven\Chainblock - Skeleton\Chainblock\bin\Debug\netcoreapp3.1\Chainblock.runtimeconfig.dev.json
+D:\Kaloyan\C#\SoftUni\2021OOPC#\10.MokingTestDriven\Chainblock - Skeleton\Chainblock\bin\Debug\netcoreapp3.1\Chainblock.dll
+D:\Kaloyan\C#\SoftUni\2021OOPC#\10.MokingTestDriven\Chainblock - Skeleton\Chainblock\bin\Debug\netcoreapp3.1\Chainblock.pdb
+D:\Kaloyan\C#\SoftUni\2021OOPC#\10.MokingTestDriven\Chainblock - Skeleton\Chainblock\obj\Debug\netcoreapp3.1\Chainblock.csprojAssemblyReference.cache
+D:\Kaloyan\C#\SoftUni\2021OOPC#\10.MokingTestDriven\Chainblock - Skeleton\Chainblock\obj\Debug\netcoreapp3.1\Chainblock.AssemblyInfoInputs.cache
+D:\Kaloyan\C#\SoftUni\2021OOPC#\10.MokingTestDriven\Chainblock - Skeleton\Chainblock\obj\Debug\netcoreapp3.1\Chainblock.AssemblyInfo.cs
+D:\Kaloyan\C#\SoftUni\2021OOPC#\10.MokingTestDriven\Chainblock - Skeleton\Chainblock\obj\Debug\netcoreapp3.1\Chainblock.csproj.CoreCompileInputs.cache
+D:\Kaloyan\C#\SoftUni\2021OOPC#\10.MokingTestDriven\Chainblock - Skeleton\Chainblock\obj\Debug\netcoreapp3.1\Chainblock.dll
+D:\Kaloyan\C#\SoftUni\2021OOPC#\10.MokingTestDriven\Chainblock - Skeleton\Chainblock\obj\Debug\netcoreapp3.1\Chainblock.pdb
+D:\Kaloyan\C#\SoftUni\2021OOPC#\10.MokingTestDriven\Chainblock - Skeleton\Chainblock\obj\Debug\netcoreapp3.1\Chainblock.genruntimeconfig.cache
