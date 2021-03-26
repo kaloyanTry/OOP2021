@@ -7,7 +7,7 @@ namespace Stealer
 {
     public class Spy
     {
-        public string StealFieldInfo (string investigatedClass, params string[] requestedFields)
+        public string StealFieldInfo(string investigatedClass, params string[] requestedFields)
         {
             Type classType = Type.GetType(investigatedClass);
             FieldInfo[] classFields = classType.GetFields(BindingFlags.Instance | BindingFlags.Static | BindingFlags.NonPublic | BindingFlags.Public);
