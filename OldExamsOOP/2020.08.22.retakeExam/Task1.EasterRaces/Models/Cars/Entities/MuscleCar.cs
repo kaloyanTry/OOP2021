@@ -1,17 +1,17 @@
-﻿namespace EasterRaces.Models.Cars.Entities
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
+
+namespace EasterRaces.Models.Cars.Entities
 {
     public class MuscleCar : Car
     {
         private const int InitialCubicCentimeters = 5000;
-        private const int InitialHorsePowerMin = 400;
-        private const int InitialHorsePowerMax = 600;
+        private const int InitialMinHorsePower = 400;
+        private const int InitialMaxHorsePower = 600;
 
         public MuscleCar(string model, int horsePower) 
-            : base(model, horsePower, InitialCubicCentimeters, InitialHorsePowerMin, InitialHorsePowerMax)
-        {
-        }
-
-        public MuscleCar(string model, int horsePower, double cubicCentimeters, int minHorsePower, int maxHorsePower) : base(model, horsePower, cubicCentimeters, minHorsePower, maxHorsePower)
+            : base(model, horsePower, InitialCubicCentimeters, InitialMinHorsePower, InitialMaxHorsePower)
         {
         }
     }

@@ -10,7 +10,7 @@ namespace EasterRaces.Models.Drivers.Entities
     {
         private string name;
 
-        protected Driver(string name)
+        public Driver(string name)
         {
             Name = name;
         }
@@ -20,26 +20,24 @@ namespace EasterRaces.Models.Drivers.Entities
             get => name;
             private set
             {
-                if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value) || value.Length < 5)
+                if (string.IsNullOrEmpty(value) || value.Length < 5)
                 {
-                    throw new ArgumentException(ExceptionMessages.DriverInvalid);
+                    throw new ArgumentException(ExceptionMessages.InvalidName);
                 }
                 name = value;
             }
         }
-
         public ICar Car { get; private set; }
 
         public int NumberOfWins { get; private set; }
 
         public bool CanParticipate => Car != null;
 
-
         public void AddCar(ICar car)
         {
             if (car == null)
             {
-                throw new ArgumentNullException(ExceptionMessages.CarNotFound);
+                throw new ArgumentNullException(ExceptionMessages.CarInvalid);
             }
 
             Car = car;

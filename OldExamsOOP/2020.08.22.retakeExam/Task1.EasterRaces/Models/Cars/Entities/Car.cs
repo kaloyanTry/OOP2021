@@ -1,8 +1,6 @@
-﻿using EasterRaces.Models.Cars.Contracts;
+﻿using System;
+using EasterRaces.Models.Cars.Contracts;
 using EasterRaces.Utilities.Messages;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace EasterRaces.Models.Cars.Entities
 {
@@ -10,13 +8,15 @@ namespace EasterRaces.Models.Cars.Entities
     {
         private string model;
         private int horsePower;
-        private double cubicCentimeters;
+        private readonly double cubicCentimeters;
 
         protected Car(string model, int horsePower, double cubicCentimeters, int minHorsePower, int maxHorsePower)
         {
             Model = model;
             HorsePower = horsePower;
             CubicCentimeters = cubicCentimeters;
+            MinHorsePower = minHorsePower;
+            MaxHorsePower = maxHorsePower;
         }
 
         public string Model
@@ -24,22 +24,24 @@ namespace EasterRaces.Models.Cars.Entities
             get => model;
             private set
             {
-                if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value) || value.Length < 4)
+                if (string.IsNullOrWhiteSpace(value) || value.Length < 4)
                 {
                     throw new ArgumentException(ExceptionMessages.InvalidModel);
                 }
                 model = value;
             }
         }
-        public int MinHorsePower { get; }
-        public int MaxHorsePower { get; }
 
-        public int HorsePower     
+        public int MinHorsePower { get; }
+
+        public int MaxHorsePower { get; }
+        
+        public int HorsePower
         {
             get => horsePower;
             private set
             {
-                if(value < MinHorsePower && value > MaxHorsePower)
+                if (value < MinHorsePower || value > MaxHorsePower)
                 {
                     throw new ArgumentException(ExceptionMessages.InvalidHorsePower);
                 }

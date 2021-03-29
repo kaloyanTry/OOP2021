@@ -1,13 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace EasterRaces.Models.Races.Entities
 {
     using EasterRaces.Models.Drivers.Contracts;
     using EasterRaces.Models.Races.Contracts;
     using EasterRaces.Utilities.Messages;
-    using System.Linq;
 
     public class Race : IRace
     {
@@ -62,7 +61,7 @@ namespace EasterRaces.Models.Races.Entities
             }
             else if (drivers.Any(d => d.Name == driver.Name))
             {
-                throw new ArgumentNullException(ExceptionMessages.DriversExists);
+                throw new ArgumentNullException(ExceptionMessages.DriverAlreadyAdded);
             }
 
             drivers.Add(driver);

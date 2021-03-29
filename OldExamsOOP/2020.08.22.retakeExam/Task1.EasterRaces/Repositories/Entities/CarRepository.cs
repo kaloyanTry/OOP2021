@@ -1,12 +1,11 @@
-﻿using System.Collections.Generic;
+﻿using EasterRaces.Models.Cars.Contracts;
+using EasterRaces.Repositories.Contracts;
+using System.Collections.Generic;
 using System.Linq;
 
-namespace EasterRaces.Repositories.Entities
+namespace EasterRaces.Repositories
 {
-    using EasterRaces.Models.Cars.Contracts;
-    using EasterRaces.Repositories.Contracts;
-
-    public abstract class CarRepository : IRepository<ICar>
+    public class CarRepository : IRepository<ICar>
     {
         private readonly List<ICar> races;
 
@@ -19,7 +18,7 @@ namespace EasterRaces.Repositories.Entities
 
         public IReadOnlyCollection<ICar> GetAll() => races;
 
-        public ICar GetByName(string name) => races.FirstOrDefault(r => r.Model == name);
+        public ICar GetByName(string name) => races.FirstOrDefault(c => c.Model == name);
 
         public bool Remove(ICar model) => races.Remove(model);
     }
