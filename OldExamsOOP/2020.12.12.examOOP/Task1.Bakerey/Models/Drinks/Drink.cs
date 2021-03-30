@@ -1,9 +1,9 @@
-﻿using System;
+﻿using Bakery.Models.Drinks.Contracts;
+using Bakery.Utilities.Messages;
+using System;
 
 namespace Bakery.Models.Drinks
 {
-    using Bakery.Models.Drinks.Contracts;
-
     public abstract class Drink : IDrink
     {
         private string name;
@@ -24,28 +24,26 @@ namespace Bakery.Models.Drinks
             get => name;
             private set
             {
-                if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException("Name cannot be null or white space!");
+                    throw new ArgumentException(ExceptionMessages.InvalidName);
                 }
                 name = value;
             }
         }
 
-        public int Portion
+        public int Portion 
         {
             get => portion;
             private set
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentException("Portion cannot be less or equal to zero");
-
+                    throw new ArgumentException(ExceptionMessages.InvalidPortion);
                 }
                 portion = value;
             }
         }
-
 
         public decimal Price
         {
@@ -54,7 +52,7 @@ namespace Bakery.Models.Drinks
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentException("Price cannot be less or equal to zero!");
+                    throw new ArgumentException(ExceptionMessages.InvalidPrice);
                 }
                 price = value;
             }
@@ -65,16 +63,17 @@ namespace Bakery.Models.Drinks
             get => brand;
             private set
             {
-                if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException("Brand cannot be null or white space!");
+                    throw new ArgumentException(ExceptionMessages.InvalidBrand);
                 }
+                brand = value;
             }
         }
 
         public override string ToString()
         {
-            return $"{GetType().Name} {Brand} - {Portion}ml - {Price:F2}lv"; 
+            return $"{GetType().Name} {Brand} - {Portion}ml - {Price:F2}lv";
         }
     }
 }

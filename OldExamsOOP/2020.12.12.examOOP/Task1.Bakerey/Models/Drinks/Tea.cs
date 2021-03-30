@@ -2,8 +2,8 @@
 {
     public class Tea : Drink
     {
-        private const decimal TeaPrice = 2.50M;
-
+        private const decimal TeaPrice = 2.5M;
+        
         public Tea(string name, int portion, string brand) 
             : base(name, portion, TeaPrice, brand)
         {

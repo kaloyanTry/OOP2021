@@ -1,16 +1,16 @@
-﻿using System;
+﻿using Bakery.Models.BakedFoods.Contracts;
+using Bakery.Utilities.Messages;
+using System;
 
 namespace Bakery.Models.BakedFoods
 {
-    using Bakery.Models.BakedFoods.Contracts;
-
     public abstract class BakedFood : IBakedFood
     {
         private string name;
         private int portion;
         private decimal price;
 
-        public BakedFood(string name, int portion, decimal price)
+        protected BakedFood(string name, int portion, decimal price)
         {
             Name = name;
             Portion = portion;
@@ -22,14 +22,13 @@ namespace Bakery.Models.BakedFoods
             get => name;
             private set
             {
-                if (string.IsNullOrEmpty(value) || string.IsNullOrWhiteSpace(value))
+                if (string.IsNullOrWhiteSpace(value))
                 {
-                    throw new ArgumentException("Name cannot be null or white space!");
+                    throw new ArgumentException(ExceptionMessages.InvalidName);
                 }
                 name = value;
             }
         }
-
 
         public int Portion
         {
@@ -38,7 +37,7 @@ namespace Bakery.Models.BakedFoods
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentException("Portion cannot be less or equal to zero");
+                    throw new ArgumentException(ExceptionMessages.InvalidPortion);
                 }
                 portion = value;
             }
@@ -51,7 +50,7 @@ namespace Bakery.Models.BakedFoods
             {
                 if (value <= 0)
                 {
-                    throw new ArgumentException("Price cannot be less or equal to zero!");
+                    throw new ArgumentException(ExceptionMessages.InvalidPrice);
                 }
                 price = value;
             }
