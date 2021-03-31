@@ -32,9 +32,8 @@ namespace Tests
         public void Enroll_ThrowsExceptionWhenWarriorsAlreadyExist()
         {
             string name = "Warrior";
-
             arena.Enroll(new Warrior(name, 50, 50));
-
+            
             Assert.Throws<InvalidOperationException>(() => arena.Enroll(new Warrior(name, 55, 55)));
         }
 
@@ -76,7 +75,6 @@ namespace Tests
         [Test]
         public void Fight_ThrowsException_WhenBothNotExist()
         {
-
             Assert.Throws<InvalidOperationException>(() => arena.Fight("Attacker", "Defender"));
         }
 
