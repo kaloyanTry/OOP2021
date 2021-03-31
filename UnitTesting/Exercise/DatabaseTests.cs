@@ -35,7 +35,6 @@ namespace Tests
             Assert.That(database.Fetch(), Is.EquivalentTo(arr));
         }
 
-
         //--Methods tests--
         [Test]
         public void Add_IncreaseDBCount_WhenAddIsValid()
