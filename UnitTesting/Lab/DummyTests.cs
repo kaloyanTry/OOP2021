@@ -3,64 +3,73 @@
 [TestFixture]
 public class DummyTests
 {
+    private const int health = 5;
+    private const int experience = 10;
+
     private Dummy dummy;
-    private Dummy deadDummy;
-    private int health = 10;
-    private int experience = 10;
+    private Dummy dummyDead;
 
     [SetUp]
     public void SetUp()
     {
         dummy = new Dummy(health, experience);
-        deadDummy = new Dummy(-5, experience);
+        dummyDead = new Dummy(-5, experience);
     }
 
     [Test]
-    public void When_HealthIsProvided_ShouldBeSetCorrectly()
+    public void Health_ShoulBeSetCorrectly()
     {
-        int attackPoints = 3;
-        dummy.TakeAttack(attackPoints);
-
-        Assert.That(dummy.Health, Is.EqualTo(health - attackPoints), "Dummy doesn't loose health when attacked");
+        Assert.AreEqual(dummy.Health, health);
     }
 
     [Test]
-    public void When_AttackDummyIsDead_ShouldThrow()
+    public void WhenAttackedIsDead_ShouldThrowException()
     {
         Assert.That(() =>
         {
-            deadDummy.TakeAttack(3);
+            dummyDead.TakeAttack(3); 
         }, Throws.InvalidOperationException.With.Message.EqualTo("Dummy is dead."));
     }
-
     [Test]
-    public void When_HealthIsPositive_ShouldBeAlive()
+    public void WhenIsAttacked_ShouldLoseHealth()
     {
-        Assert.That(dummy.IsDead(), Is.EqualTo(false));
+        int attackePoints = 3;
+        dummy.TakeAttack(attackePoints);
+
+        Assert.AreEqual(dummy.Health, health - attackePoints);
     }
 
     [Test]
-    public void When_HealthIsZero_ShouldBeDead()
+    public void WhenAliveGiveExperince_ShouldThrowException()
+    {
+        Assert.That(() =>
+        {
+            dummy.GiveExperience();
+        },  Throws.InvalidOperationException.With.Message.EqualTo("Target is not dead."));
+    }
+
+    [Test]
+    public void WhenDead_ShouldGiveExperience()
+    {
+        Assert.That(dummyDead.GiveExperience(), Is.EqualTo(experience));
+    }
+
+    [Test]
+    public void WhenHealthIsNegative_ShouldBeDead()
+    {
+        Assert.That(dummyDead.IsDead(), Is.EqualTo(true));
+    }
+
+    public void WhenHealthIsZero_ShouldBeDead()
     {
         dummy = new Dummy(0, experience);
+
         Assert.That(dummy.IsDead(), Is.EqualTo(true));
     }
 
     [Test]
-    public void When_HealthIsNegative_ShouldBeDead()
+    public void WhenHealthIsPossitive_ShouldBeAlive()
     {
-        Assert.That(deadDummy.IsDead(), Is.EqualTo(true));
-    }
-
-    [Test]
-    public void When_Dead_ShouldGiveExperience()
-    {
-        Assert.That(deadDummy.GiveExperience(), Is.EqualTo(experience));
-    }
-
-    [Test]
-    public void When_AliveGiveExperience_ShouldThrow()
-    {
-        Assert.That(() => { dummy.GiveExperience(); }, Throws.InvalidOperationException.With.Message.EqualTo("Target is not dead."));
+        Assert.That(dummy.IsDead(), Is.EqualTo(false));
     }
 }
