@@ -1,10 +1,10 @@
 using NUnit.Framework;
 using System;
-using System.Linq;
 
 namespace Tests
 {
-    //using Database; //Comment for Judge
+    //using Database; // comment for Judge
+    using System.Linq;
 
     public class DatabaseTests
     {
@@ -16,40 +16,20 @@ namespace Tests
             database = new Database();
         }
 
-        //--Ctor tests--
+        // Constructor tests:
         [Test]
-        public void Ctor_ThrowsExceptionWhenDBCapacityIsExceeded()
+        public void Ctor_AddElementsToDBCorrectly()
         {
-            Assert.Throws<InvalidOperationException>(() =>
-            database = new Database(1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17));
+            int[] elements = new int[] { 1, 3, 4 };
+            database = new Database(elements);
+
+            Assert.That(database.Count, Is.EqualTo(elements.Length));
+            Assert.That(database.Fetch(), Is.EqualTo(elements));
         }
 
+        //methods tests:
         [Test]
-        public void Ctor_AddsElementsToDB()
-        {
-            int[] arr = new[] { 1, 2, 3 };
-
-            database = new Database(arr);
-
-            Assert.That(database.Count, Is.EqualTo(arr.Length));
-            Assert.That(database.Fetch(), Is.EquivalentTo(arr));
-        }
-
-        //--Methods tests--
-        [Test]
-        public void Add_IncreaseDBCount_WhenAddIsValid()
-        {
-            int n = 15;
-            for (int i = 0; i < n; i++)
-            {
-                database.Add(123);
-            }
-
-            Assert.That(database.Count, Is.EqualTo(n));
-        }
-
-        [Test]
-        public void Add_ThrowsInvalidOperationException_WhenCapacityExceeded()
+       public void AddElements_ShouldThrowExceptionIfMoreThanCapacity()
         {
             for (int i = 0; i < 16; i++)
             {
@@ -60,58 +40,71 @@ namespace Tests
         }
 
         [Test]
-        public void Add_AddsElementsToDatabase()
+        public void AddMoreElements_ShouldThrowException()
         {
-            int element = 123;
+            for (int i = 0; i < 16; i++)
+            {
+                database.Add(i);
+            }
 
-            database.Add(element);
-
-            int[] elements = database.Fetch();
-
-            Assert.That(elements.Contains(element));
+            Assert.That(() =>
+            {
+                database.Add(17);
+            }, Throws.InvalidOperationException.With.Message.EqualTo("Array's capacity must be exactly 16 integers!"));
         }
 
         [Test]
-        public void Count_ReturnsZero_WhenDBIsEmpty()
+        public void AddElement_ShoulBeCorrectInCapacity()
+        {
+            for (int i = 0; i < 15; i++)
+            {
+                database.Add(i);
+            }
+            Assert.That(database.Count, Is.EqualTo(15));
+        }
+
+        [Test]
+        public void AddElementToDB_Fetch()
+        {
+            database.Add(3);
+
+            int[] elements = database.Fetch();
+
+            Assert.That(elements.Contains(3));
+        }
+
+        [Test]
+        public void CountReturnsZero_WhenDBIsEmpty()
         {
             Assert.That(database.Count, Is.EqualTo(0));
         }
 
         [Test]
-        public void Remove_ThrowsInvalidOperationException_WhenDBIsEmpry()
+        public void RemoveElementFromEmptyDB_ShouldThrowException()
         {
-            Assert.Throws<InvalidOperationException>(() => database.Remove());
+            Assert.That(() =>
+            {
+                database.Remove();
+            }, Throws.InvalidOperationException.With.Message.EqualTo("The collection is empty!"));
+
+            //Assert.Throws<InvalidOperationException>(() => database.Remove());
         }
 
         [Test]
-        public void Remove_DecreasesDBCount()
+        public void RemoveCorrectlyFromDB()
         {
-            database.Add(1);
-            database.Add(2);
-            database.Add(3);
-
-            database.Remove();
-            int expectedCount = 2;
-
-            Assert.That(database.Count, Is.EqualTo(expectedCount));
-        }
-
-        [Test]
-        public void Remove_LastElementFromDB()
-        {
-            database.Add(1);
-            database.Add(2);
-            database.Add(3);
+            for (int i = 0; i < 16; i++)
+            {
+                database.Add(i);
+            }
 
             database.Remove();
 
-            int[] elements = database.Fetch();
-
-            Assert.IsFalse(elements.Contains(3));
+            Assert.That(database.Count, Is.EqualTo(15));
         }
 
         [Test]
-        public void Fetch_ReturnsDBCopyInsteadOfReference()
+        public void FetchCopyCorrectly()
         {
             database.Add(1);
             database.Add(2);
@@ -123,6 +116,7 @@ namespace Tests
             int[] secondCopy = database.Fetch();
 
             Assert.That(firstCopy, Is.Not.EqualTo(secondCopy));
+
         }
     }
 }
