@@ -4,48 +4,41 @@ using System;
 [TestFixture]
 public class AxeTests
 {
-    private const int AxeAtack = 1;
+    private const int AxeAttack = 1;
     private const int AxeDurability = 1;
     private const int DummyHealth = 10;
-    private const int DummyExperience = 10;
+    private const int DummyExperiance = 10;
 
     private Axe axe;
     private Dummy dummy;
 
-    //-------------- Initializer ---------------
     [SetUp]
-    public void TestInit()
+    public void SetUp()
     {
-        axe = new Axe(AxeAtack, AxeDurability);
-        dummy = new Dummy(DummyHealth, DummyExperience);
+        axe = new Axe(AxeAttack, AxeDurability);
+        dummy = new Dummy(DummyHealth, DummyExperiance);
     }
 
-    //---------------- Tests -------------------
+    [Test]
+    public void AxeAttackAndDurability_ShouldBeSetCorrectly()
+    {
+        Assert.AreEqual(axe.AttackPoints, AxeAttack);
+        Assert.AreEqual(axe.DurabilityPoints, AxeDurability);
+    }
+
     [Test]
     public void AxeLosesDurabilityAfterAttack()
     {
-        //Arrange
-
-        //Act
         axe.Attack(dummy);
 
-        //Assert
         Assert.AreEqual(0, axe.DurabilityPoints, "Axe Durability doesn't change after attack.");
-        //Assert.That(axe.DurabilityPoints, Is.EqualTo(9), "Axe Durability doesn't change after attack.");
     }
 
     [Test]
     public void BrokenAxeCantAttack()
     {
-        //Arrange
-
-        //Act
         axe.Attack(dummy);
 
-        //Assert
-        //Assert.Throws<InvalidOperationException>(() => axe.Attack(dummy));
-
         Assert.That(() => axe.Attack(dummy), Throws.InvalidOperationException.With.Message.EqualTo("Axe is broken."));
-        //Assert.Throws(Is.TypeOf<InvalidOperationException>().And.Message.EqualTo("Axe is broken."), () => axe.Attack(dummy));
     }
 }
