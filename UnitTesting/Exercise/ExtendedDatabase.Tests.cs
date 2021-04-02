@@ -3,7 +3,7 @@ using System;
 
 namespace Tests
 {
-    //using ExtendedDatabase; //Commit for Judge
+    //using ExtendedDatabase; //Comment for Judge
 
     public class ExtendedDatabaseTests
     {
