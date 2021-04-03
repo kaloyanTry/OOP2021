@@ -18,6 +18,39 @@ namespace BankSafe.Tests
             item = new Item("me", "1");
         }
 
+        //--Ctor tests--
+        [Test]
+        public void Ctor_WhenVaultIsInitialised_ShouldHaveCorrectCells()
+        {
+            var initialValue = new Dictionary<string, Item>
+            {
+                {"A1", null},
+                {"A2", null},
+                {"A3", null},
+                {"A4", null},
+                {"B1", null},
+                {"B2", null},
+                {"B3", null},
+                {"B4", null},
+                {"C1", null},
+                {"C2", null},
+                {"C3", null},
+                {"C4", null},
+            };
+
+            //create a list with key:value pairs from initialDictionary
+            var initialValuesAsList = initialValue.ToImmutableDictionary().ToList();
+
+            var vaultValuesAsList = vault.VaultCells.ToList();
+
+            for (int i = 0; i < initialValuesAsList.Count; i++)
+            {
+                Assert.AreEqual(initialValuesAsList[i].Key, vaultValuesAsList[i].Key);
+                Assert.AreEqual(initialValuesAsList[i].Value, vaultValuesAsList[i].Value);
+            }
+        }
+
+        //--Methods tests--
         [Test]
         public void WhenCellNotExist_ShouldTrhrowException()
         {
@@ -96,55 +129,13 @@ namespace BankSafe.Tests
         }
 
         [Test]
-        public void WhenItemIsRemoved_ShouldCellBeNull()
-        {
-            vault.AddItem("A2", item);
-            string result = vault.RemoveItem("A2", item);
-
-            Assert.AreEqual(result, $"Remove item:{item.ItemId} successfully!");
-        }
-
-        [Test]
         public void WhenItemIsRemoved_ShouldMakeCellNull()
         {
             vault.AddItem("A2", item);
 
-            string result = vault.RemoveItem("A2", item);
+            vault.RemoveItem("A2", item);
 
             Assert.AreEqual(null, vault.VaultCells["A2"]);
-        }
-
-        [Test]
-        public void Ctor_WhenVaultIsInitialised_ShouldHaveCorrectCells()
-        {
-            var initialValue = new Dictionary<string, Item>
-            {
-                {"A1", null},
-                {"A2", null},
-                {"A3", null},
-                {"A4", null},
-                {"B1", null},
-                {"B2", null},
-                {"B3", null},
-                {"B4", null},
-                {"C1", null},
-                {"C2", null},
-                {"C3", null},
-                {"C4", null},
-            };
-
-            //create a list with key:value pairs from Dictionary
-
-            var initialValuesAsList = initialValue.ToImmutableDictionary().ToList();
-
-            var vaultValuesAsList = vault.VaultCells.ToList();
-
-            for (int i = 0; i < initialValuesAsList.Count; i++)
-            {
-                Assert.AreEqual(initialValuesAsList[i].Key, vaultValuesAsList[i].Key);
-                Assert.AreEqual(initialValuesAsList[i].Value, vaultValuesAsList[i].Value);
-            }
-
         }
     }
 }
