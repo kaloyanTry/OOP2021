@@ -1,9 +1,10 @@
-﻿using Bakery.Models.BakedFoods.Contracts;
-using Bakery.Utilities.Messages;
-using System;
+﻿using System;
 
 namespace Bakery.Models.BakedFoods
 {
+    using Bakery.Models.BakedFoods.Contracts;
+    using Bakery.Utilities.Messages;
+
     public abstract class BakedFood : IBakedFood
     {
         private string name;
@@ -58,7 +59,7 @@ namespace Bakery.Models.BakedFoods
 
         public override string ToString()
         {
-            return $"{GetType().Name}: {Portion}g - {Price:F2}";
+            return $"{Name}: {Portion}g - {Price:F2}";
         }
     }
 }

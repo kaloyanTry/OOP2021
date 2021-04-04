@@ -32,7 +32,7 @@ namespace Bakery.Models.Drinks
             }
         }
 
-        public int Portion 
+        public int Portion
         {
             get => portion;
             private set
@@ -73,7 +73,7 @@ namespace Bakery.Models.Drinks
 
         public override string ToString()
         {
-            return $"{GetType().Name} {Brand} - {Portion}ml - {Price:F2}lv";
+            return $"{Name} {Brand} - {Portion}ml - {Price:F2}lv";
         }
     }
 }

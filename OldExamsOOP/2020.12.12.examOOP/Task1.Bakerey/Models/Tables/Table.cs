@@ -4,32 +4,30 @@ using Bakery.Models.Tables.Contracts;
 using Bakery.Utilities.Messages;
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Text;
 
 namespace Bakery.Models.Tables
 {
     public abstract class Table : ITable
     {
-        private readonly List<IBakedFood> foods;
-        private readonly List<IDrink> drinks;
+        private List<IBakedFood> FoodOrders;
+        private List<IDrink> DrinkOrders;
 
         private int capacity;
         private int numberOfPeople;
 
-        public Table(int tableNumber, int capacity, decimal pricePerPerson)
+        protected Table(int tableNumber, int capacity, decimal pricePerPerson)
         {
             TableNumber = tableNumber;
             Capacity = capacity;
             PricePerPerson = pricePerPerson;
-            IsReserved = false;
-            foods = new List<IBakedFood>();
-            drinks = new List<IDrink>();
+            FoodOrders = new List<IBakedFood>();
+            DrinkOrders = new List<IDrink>();
         }
 
-        public int TableNumber { get; }
+        public int TableNumber { get; private set; }
 
-        public int Capacity
+        public int Capacity 
         {
             get => capacity;
             private set
@@ -55,46 +53,56 @@ namespace Bakery.Models.Tables
             }
         }
 
-        public decimal PricePerPerson { get; }
+        public decimal PricePerPerson { get; private set; }
 
         public bool IsReserved { get; private set; }
 
-        public decimal Price 
-            => drinks.Select(d => d.Price).Sum() 
-            + foods.Select(f => f.Price).Sum() 
-            + NumberOfPeople * PricePerPerson;
+        public decimal Price { get; set; }
 
         public void Clear()
         {
-            foods.Clear();
-            drinks.Clear();
-            IsReserved = false;
+            DrinkOrders.Clear();
+            FoodOrders.Clear();
             NumberOfPeople = 0;
+            IsReserved = false;
         }
 
         public decimal GetBill()
         {
-            return Price;
+            decimal bill = 0;
+
+            foreach (var food in FoodOrders)
+            {
+                bill += food.Price;
+            }
+
+            foreach (var drink in DrinkOrders)
+            {
+                bill += drink.Price;
+            }
+
+            return bill;
         }
 
         public string GetFreeTableInfo()
         {
             StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"Table {TableNumber}");
-            sb.AppendLine($"Type {GetType().Name}");
-            sb.AppendLine($"Capacity {Capacity}");
-            sb.AppendLine($"Price per Person {PricePerPerson}");
+            sb.AppendLine($"Table: {TableNumber}");
+            sb.AppendLine($"Type: {GetType().Name}");
+            sb.AppendLine($"Capacity: {Capacity}");
+            sb.AppendLine($"Price per Person: {PricePerPerson:F2}");
+
             return sb.ToString().TrimEnd();
         }
 
         public void OrderDrink(IDrink drink)
         {
-            drinks.Add(drink);
+            DrinkOrders.Add(drink);
         }
 
         public void OrderFood(IBakedFood food)
         {
-            foods.Add(food);
+            FoodOrders.Add(food);
         }
 
         public void Reserve(int numberOfPeople)
