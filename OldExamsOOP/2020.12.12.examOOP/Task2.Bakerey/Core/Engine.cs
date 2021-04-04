@@ -7,15 +7,15 @@
 
     public class Engine : IEngine
     {
-        private readonly IWriter writer;
-        private readonly IReader reader;
-        private readonly IController controller;
+        private IWriter writer;
+        private IReader reader;
+        private IController controller;
 
         public Engine()
         {
-            writer = new Writer();
-            reader = new Reader();
-            controller = new Controller();
+            this.writer = new Writer();
+            this.reader = new Reader();
+            this.controller = new Controller();
         }
 
         public void Run()

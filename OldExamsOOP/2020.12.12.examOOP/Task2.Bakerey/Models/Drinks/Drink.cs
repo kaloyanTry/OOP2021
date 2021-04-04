@@ -1,10 +1,9 @@
-﻿using System;
+﻿using Bakery.Models.Drinks.Contracts;
+using Bakery.Utilities.Messages;
+using System;
 
 namespace Bakery.Models.Drinks
 {
-    using Bakery.Models.Drinks.Contracts;
-    using Bakery.Utilities.Messages;
-
     public abstract class Drink : IDrink
     {
         private string name;
@@ -41,12 +40,10 @@ namespace Bakery.Models.Drinks
                 if (value <= 0)
                 {
                     throw new ArgumentException(ExceptionMessages.InvalidPortion);
-
                 }
                 portion = value;
             }
         }
-
 
         public decimal Price
         {
@@ -76,7 +73,7 @@ namespace Bakery.Models.Drinks
 
         public override string ToString()
         {
-            return $"{GetType().Name} {Brand} - {Portion}ml - {Price:F2}lv"; 
+            return $"{Name} {Brand} - {Portion}ml - {Price:F2}lv";
         }
     }
 }

@@ -1,191 +1,170 @@
-﻿using System;
+﻿using Bakery.Core.Contracts;
+using Bakery.Models.BakedFoods;
+using Bakery.Models.BakedFoods.Contracts;
+using Bakery.Models.Drinks;
+using Bakery.Models.Drinks.Contracts;
+using Bakery.Models.Tables;
+using Bakery.Models.Tables.Contracts;
+using Bakery.Utilities.Enums;
+using System;
 using System.Collections.Generic;
-using System.Text;
 using System.Linq;
-
+using System.Text;
 
 namespace Bakery.Core
 {
-    using Bakery.Core.Contracts;
-    using Bakery.Models.BakedFoods;
-    using Bakery.Models.BakedFoods.Contracts;
-    using Bakery.Models.Drinks;
-    using Bakery.Models.Drinks.Contracts;
-    using Bakery.Models.Tables;
-    using Bakery.Models.Tables.Contracts;
-    using Bakery.Utilities.Messages;
-
     public class Controller : IController
     {
-        private readonly ICollection<IBakedFood> bakedFoods;
-        private readonly ICollection<IDrink> drinks;
-        private readonly ICollection<ITable> tables;
-
-        private decimal TotalRestaurantIncome;
+        private List<IBakedFood> bakedFoods;
+        private List<IDrink> drinks;
+        private List<ITable> tables;
+        private decimal totalIncome = 0;
 
         public Controller()
         {
             bakedFoods = new List<IBakedFood>();
             drinks = new List<IDrink>();
             tables = new List<ITable>();
-            TotalRestaurantIncome = 0;
         }
 
         public string AddDrink(string type, string name, int portion, string brand)
         {
-            IDrink drink = null;
-
             if (type == "Tea")
             {
-                drink = new Tea(name, portion, brand);
+                this.drinks.Add(new Tea(name, portion, brand));
             }
-            else if (type == "Water")
+            if (type == "Water")
             {
-                drink = new Water(name, portion, brand);
+                this.drinks.Add(new Water(name, portion, brand));
             }
 
-            drinks.Add(drink);
-
-            var message = string.Format(OutputMessages.DrinkAdded, drink.Name, drink.Brand);
-
-            return message;
+            return $"Added { name} ({ brand}) to the drink menu";
         }
 
+        // Bread White 2.50
         public string AddFood(string type, string name, decimal price)
         {
-            IBakedFood food = null;
-
             if (type == "Bread")
             {
-                food = new Bread(name, price);
+                this.bakedFoods.Add(new Bread(name, price));
             }
-            else if (type == "Cake")
+            if (type == "Cake")
             {
-                food = new Cake(name, price);
+                this.bakedFoods.Add(new Cake(name, price));
             }
 
-            bakedFoods.Add(food);
-
-            var message = string.Format(OutputMessages.FoodAdded, food.Name, food.Price);
-
-            return message;
+            return $"Added {name} ({type}) to the menu";
         }
 
         public string AddTable(string type, int tableNumber, int capacity)
         {
-            ITable table = null;
-
             if (type == "InsideTable")
             {
-                table = new InsideTable(tableNumber, capacity);
+                this.tables.Add(new InsideTable(tableNumber, capacity));
             }
-            else if (type == "OutsideTable")
+            if (type == "OutsideTable")
             {
-                table = new OutsideTable(tableNumber, capacity);
+                this.tables.Add(new OutsideTable(tableNumber, capacity));
             }
 
-            tables.Add(table);
-
-            var message = string.Format(OutputMessages.TableAdded, tableNumber);
-
-            return message;
+            return $"Added table number {tableNumber} in the bakery";
         }
 
         public string GetFreeTablesInfo()
         {
-            var notReservedTable = tables.Where(t => t.IsReserved == false).ToList();
+            string result = "";
+            List<ITable> freeTables = tables.Where(table => !table.IsReserved).ToList();
 
-            StringBuilder sb = new StringBuilder();
-
-            foreach (var table in notReservedTable)
+            //for (int i = 0; i < freeTables.Count; i++)
+            //{
+            //    if (i != freeTables.Count - 1)
+            //    {
+            //        result += freeTables[i].GetFreeTableInfo() + Environment.NewLine;
+            //    }
+            //    else
+            //    {
+            //        result += freeTables[i].GetFreeTableInfo();
+            //    }
+            //}
+            foreach (var freeTable in freeTables)
             {
-                sb.AppendLine(table.GetFreeTableInfo());
+                result += freeTable.GetFreeTableInfo() + Environment.NewLine;
             }
 
-            return sb.ToString().TrimEnd();
+            return result.TrimEnd();
         }
 
         public string GetTotalIncome()
         {
-            return string.Format(OutputMessages.TotalIncome, TotalRestaurantIncome);
+            return $"Total income: {totalIncome:f2}lv";
         }
 
         public string LeaveTable(int tableNumber)
         {
-            ITable table = tables.FirstOrDefault(t => t.TableNumber == tableNumber);
-
-            if (table == null)
-            {
-                throw new ArgumentException(string.Format(OutputMessages.WrongTableNumber, tableNumber));
-            }
-
-            var totalTableSum = table.GetBill();
-            TotalRestaurantIncome += totalTableSum;
-
+            ITable table = tables.FirstOrDefault(table => table.TableNumber == tableNumber);
+            var bill = table.GetBill() + table.Price;
+            totalIncome += bill;
             table.Clear();
 
-            StringBuilder sb = new StringBuilder();
-            sb.AppendLine($"Table: {tableNumber}");
-            sb.AppendLine($"Bill: {totalTableSum:F2}");
-
-            return sb.ToString().Trim();
+            return $"Table: {tableNumber}\r\n" +
+                    $"Bill: {bill:f2}";
         }
 
         public string OrderDrink(int tableNumber, string drinkName, string drinkBrand)
         {
-            ITable table = tables.FirstOrDefault(t => t.TableNumber == tableNumber);
-
-            IDrink drink = drinks.FirstOrDefault(d => d.Name == drinkName && d.Brand == drinkBrand);
-
+            ITable table = tables.FirstOrDefault(table => table.TableNumber == tableNumber);
             if (table == null)
             {
-                return string.Format(OutputMessages.WrongTableNumber, tableNumber);
+                return $"Could not find table {tableNumber}";
             }
-
-            if (drink == null)
+            else
             {
-                return string.Format(OutputMessages.NonExistentDrink, drinkName, drinkBrand);
+                IDrink drink = drinks.FirstOrDefault(d => d.Name == drinkName && d.Brand == drinkBrand);
+                if (drink == null)
+                {
+                    return $"There is no {drinkName} {drinkBrand} available";
+                }
+                else
+                {
+                    table.OrderDrink(drink);
+                    return $"Table {tableNumber} ordered {drinkName} {drinkBrand}";
+                }
             }
-
-            table.OrderDrink(drink);
-
-            return $"Table {table.TableNumber} ordered {drink.Name} {drink.Brand}";
         }
 
         public string OrderFood(int tableNumber, string foodName)
         {
-            ITable table = tables.FirstOrDefault(t => t.TableNumber == tableNumber);
-
-            IBakedFood bakedFood = bakedFoods.FirstOrDefault(f => f.Name == foodName);
-
+            ITable table = tables.FirstOrDefault(table => table.TableNumber == tableNumber);
             if (table == null)
             {
-                return string.Format(OutputMessages.WrongTableNumber, tableNumber);
+                return $"Could not find table {tableNumber}";
             }
-
-            if (bakedFood == null)
+            else
             {
-                return string.Format(OutputMessages.NonExistentFood, foodName);
+                IBakedFood food = bakedFoods.FirstOrDefault(f => f.Name == foodName);
+                if (food == null)
+                {
+                    return $"No {foodName} in the menu";
+                }
+                else
+                {
+                    table.OrderFood(food);
+                    return $"Table {tableNumber} ordered {foodName}";
+                }
             }
-
-            table.OrderFood(bakedFood);
-
-            return string.Format(OutputMessages.FoodOrderSuccessful, table.TableNumber, bakedFood.Name);
         }
 
         public string ReserveTable(int numberOfPeople)
         {
-            ITable table = tables.FirstOrDefault(t => t.IsReserved == false && t.Capacity >= numberOfPeople);
-
+            ITable table = tables.FirstOrDefault(table => !table.IsReserved && table.Capacity >= numberOfPeople);
             if (table == null)
             {
-                return string.Format(OutputMessages.ReservationNotPossible, numberOfPeople);
+                return $"No available table for {numberOfPeople} people";
             }
             else
             {
                 table.Reserve(numberOfPeople);
-
-                return string.Format(OutputMessages.TableReserved, table.TableNumber, numberOfPeople);
+                return $"Table {table.TableNumber} has been reserved for {numberOfPeople} people";
             }
         }
     }

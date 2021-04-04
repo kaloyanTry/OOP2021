@@ -11,7 +11,7 @@ namespace Bakery.Models.BakedFoods
         private int portion;
         private decimal price;
 
-        public BakedFood(string name, int portion, decimal price)
+        protected BakedFood(string name, int portion, decimal price)
         {
             Name = name;
             Portion = portion;
@@ -59,7 +59,7 @@ namespace Bakery.Models.BakedFoods
 
         public override string ToString()
         {
-            return $"{GetType().Name}: {Portion}g - {Price:F2}";
+            return $"{Name}: {Portion}g - {Price:F2}";
         }
     }
 }
