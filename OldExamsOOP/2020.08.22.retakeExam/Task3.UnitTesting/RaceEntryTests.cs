@@ -1,88 +1,95 @@
 using NUnit.Framework;
-using TheRace;
 using System;
+using TheRace;
 
 namespace TheRace.Tests
 {
     public class RaceEntryTests
     {
+        private RaceEntry race;
 
         [SetUp]
         public void Setup()
         {
+            race = new RaceEntry();
         }
 
         [Test]
-        public void AddDriverMethod_ShouldThrowExceptionWhenNullIsPassed()
+        public void ShouldThrowException_WhenAddDriverNull()
         {
-            var raceEntry = new RaceEntry();
-
-            Assert.Throws<InvalidOperationException>(() => raceEntry.AddDriver(null));
-        }
-
-        [Test]
-        public void AddDriverMethod_ShouldThrowExceptionWhenDriverExist()
-        {
-            Assert.Throws<InvalidOperationException>(() =>
+            Exception ex = Assert.Throws<InvalidOperationException>(() =>
             {
-                var raceEntry = new RaceEntry();
-
-                var unitCar = new UnitCar("model", 10, 10);
-                var unitDriver = new UnitDriver("Gesho", unitCar);
-
-                raceEntry.AddDriver(unitDriver);
-                raceEntry.AddDriver(unitDriver);
+                race.AddDriver(null);
             });
+
+            Assert.AreEqual(ex.Message, "Driver cannot be null.");
         }
 
         [Test]
-        public void AddDriverMethod_ShouldWork()
+        public void ShouldThrowException_WhenAddDriverExistName()
         {
-            var raceEntry = new RaceEntry();
+            Exception ex = Assert.Throws<InvalidOperationException>(() =>
+            {
+                var car = new UnitCar("model", 100, 1000);
+                var driver = new UnitDriver("Sena", car);
 
-            var unitCar = new UnitCar("model", 10, 10);
-            var unitDriver = new UnitDriver("Gesho", unitCar);
+                race.AddDriver(driver);
+                race.AddDriver(driver);
+            });
 
-            var result = raceEntry.AddDriver(unitDriver);
-
-            Assert.AreEqual($"Driver {unitDriver.Name} added in race.", result);
-            Assert.AreEqual(1, raceEntry.Counter);
+            Assert.AreEqual(ex.Message, $"Driver Sena is already added.");
         }
 
         [Test]
-        public void CalculateAvrgHP_ShouldThrowExceptionWhenParticipantsNotEnough()
+        public void ShouldSetCorrectly_WhenAddDriver()
         {
-            var raceEntry = new RaceEntry();
+            var car = new UnitCar("model", 100, 1000);
+            var driver = new UnitDriver("Sena", car);
 
-            var unitCar = new UnitCar("model", 10, 10);
-            var unitDriver = new UnitDriver("Gesho", unitCar);
-
-            var result = raceEntry.AddDriver(unitDriver);
-
-            Assert.Throws<InvalidOperationException>(() => raceEntry.CalculateAverageHorsePower());
+            race.AddDriver(driver);
+            Assert.That(driver.Name, Is.EqualTo("Sena"));
         }
 
         [Test]
-        public void CalculateAvrgHP_ShouldWork()
+        public void ShouldCountCorrectly_WhenAddDriver()
         {
-            var raceEntry = new RaceEntry();
+            var car1 = new UnitCar("model1", 100, 1000);
+            var driver1 = new UnitDriver("Sena", car1);
 
-            var unitCar = new UnitCar("VW", 100, 4600);
-            var unitDriver = new UnitDriver("Kiro", unitCar);
+            var car2 = new UnitCar("model2", 200, 2000);
+            var driver2 = new UnitDriver("Prost", car2);
 
-            var unitCar2 = new UnitCar("BVW", 100, 5800);
-            var unitDriver2 = new UnitDriver("Ivan", unitCar2);
+            race.AddDriver(driver1);
+            race.AddDriver(driver2);
+            Assert.That(race.Counter, Is.EqualTo(2));
+        }
 
-            var unitCar3 = new UnitCar("Lada", 100, 6500);
-            var unitDriver3 = new UnitDriver("Stoyan", unitCar3);
+        [Test]
+        public void ShouldCountLess_WhenParticipantsLessThenCounter()
+        {
+            var car1 = new UnitCar("model1", 100, 1000);
+            var driver1 = new UnitDriver("Sena", car1);
+            race.AddDriver(driver1);
 
-            raceEntry.AddDriver(unitDriver);
-            raceEntry.AddDriver(unitDriver2);
-            raceEntry.AddDriver(unitDriver3);
+            var count = race.Counter;
 
-            var result = raceEntry.CalculateAverageHorsePower();
+            Assert.That(count, Is.LessThan(2));
+        }
 
-            Assert.AreEqual(100, result);
+        [Test]
+        public void ShouldCalculateCorrectly_WhenAddDriver()
+        {
+            var car1 = new UnitCar("model1", 100, 1000);
+            var driver1 = new UnitDriver("Sena", car1);
+
+            var car2 = new UnitCar("model2", 200, 2000);
+            var driver2 = new UnitDriver("Prost", car2);
+
+            race.AddDriver(driver1);
+            race.AddDriver(driver2);
+
+            race.CalculateAverageHorsePower();
+            Assert.That(race.CalculateAverageHorsePower, Is.EqualTo(150));
         }
     }
 }
