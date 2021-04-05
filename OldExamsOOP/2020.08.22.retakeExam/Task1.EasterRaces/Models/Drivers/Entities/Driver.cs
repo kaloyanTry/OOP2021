@@ -32,7 +32,6 @@ namespace EasterRaces.Models.Drivers.Entities
 
         public bool CanParticipate => Car != null;
 
-
         public void AddCar(ICar car)
         {
             if (car == null)
