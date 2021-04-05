@@ -1,13 +1,11 @@
-﻿using System;
+﻿using EasterRaces.Models.Drivers.Contracts;
+using EasterRaces.Models.Races.Contracts;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 
 namespace EasterRaces.Models.Races.Entities
 {
-    using EasterRaces.Models.Drivers.Contracts;
-    using EasterRaces.Models.Races.Contracts;
-    using EasterRaces.Utilities.Messages;
-
     public class Race : IRace
     {
         private string name;
@@ -28,7 +26,7 @@ namespace EasterRaces.Models.Races.Entities
             {
                 if (string.IsNullOrEmpty(value) || value.Length < 5)
                 {
-                    throw new ArgumentException(string.Format(ExceptionMessages.InvalidName, name, 5));
+                    throw new ArgumentException($"Name {name} cannot be less than 5 symbols.");
                 }
                 name = value;
             }
@@ -41,7 +39,7 @@ namespace EasterRaces.Models.Races.Entities
             {
                 if (value < 1)
                 {
-                    throw new ArgumentException(string.Format(ExceptionMessages.InvalidNumberOfLaps, laps));
+                    throw new ArgumentException("Laps cannot be less than 1.");
                 }
                 laps = value;
             }
@@ -53,15 +51,17 @@ namespace EasterRaces.Models.Races.Entities
         {
             if (driver == null)
             {
-                throw new ArgumentNullException(ExceptionMessages.DriverInvalid);
+                throw new ArgumentNullException(nameof(IDriver), "Driver cannot be null.");
             }
+            
             else if (!driver.CanParticipate)
             {
-                throw new ArgumentException(string.Format(ExceptionMessages.DriverNotParticipate, driver.Name));
+                throw new ArgumentException($"Driver {driver.Name} could not participate in race.");
             }
+
             else if (drivers.Any(d => d.Name == driver.Name))
             {
-                throw new ArgumentNullException(ExceptionMessages.DriverAlreadyAdded);
+                throw new ArgumentNullException($"Driver {driver.Name} is already added in {Name} race.");
             }
 
             drivers.Add(driver);

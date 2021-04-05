@@ -5,21 +5,24 @@ using System.Linq;
 
 namespace EasterRaces.Repositories.Entities
 {
-    public class DriverRepository : IRepository<IDriver>
+    class DriverRepository : IRepository<IDriver>
     {
-        private readonly List<IDriver> races;
+        private readonly List<IDriver> drivers;
 
         public DriverRepository()
         {
-            races = new List<IDriver>();
+            drivers = new List<IDriver>();
+        }
+        public void Add(IDriver model) => drivers.Add(model);
+
+        public IReadOnlyCollection<IDriver> GetAll() => drivers.ToList();
+
+        public IDriver GetByName(string name)
+        {
+            IDriver driver = drivers.FirstOrDefault(d => d.Name == name);
+            return driver;
         }
 
-        public void Add(IDriver model) => races.Add(model);
-
-        public IReadOnlyCollection<IDriver> GetAll() => races;
-
-        public IDriver GetByName(string name) => races.FirstOrDefault(d => d.Name == name);
-
-        public bool Remove(IDriver model) => races.Remove(model);
+        public bool Remove(IDriver model) => drivers.Remove(model);
     }
 }
