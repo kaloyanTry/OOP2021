@@ -1,6 +1,5 @@
-﻿using System;
-using EasterRaces.Models.Cars.Contracts;
-using EasterRaces.Utilities.Messages;
+﻿using EasterRaces.Models.Cars.Contracts;
+using System;
 
 namespace EasterRaces.Models.Cars.Entities
 {
@@ -8,15 +7,17 @@ namespace EasterRaces.Models.Cars.Entities
     {
         private string model;
         private int horsePower;
-        private readonly double cubicCentimeters;
+        private double cubicCentimeters;
+        private int minHorsePower;
+        private int maxHorsePower;
 
         protected Car(string model, int horsePower, double cubicCentimeters, int minHorsePower, int maxHorsePower)
         {
             Model = model;
             HorsePower = horsePower;
             CubicCentimeters = cubicCentimeters;
-            MinHorsePower = minHorsePower;
-            MaxHorsePower = maxHorsePower;
+            this.minHorsePower = minHorsePower;
+            this.maxHorsePower = maxHorsePower;
         }
 
         public string Model
@@ -26,30 +27,26 @@ namespace EasterRaces.Models.Cars.Entities
             {
                 if (string.IsNullOrWhiteSpace(value) || value.Length < 4)
                 {
-                    throw new ArgumentException(ExceptionMessages.InvalidModel);
+                    throw new ArgumentException($"Model {model} cannot be less than 4 symbols.");
                 }
                 model = value;
             }
         }
 
-        public int MinHorsePower { get; }
-
-        public int MaxHorsePower { get; }
-        
         public int HorsePower
         {
             get => horsePower;
             private set
             {
-                if (value < MinHorsePower || value > MaxHorsePower)
+                if (horsePower < minHorsePower && horsePower > maxHorsePower)
                 {
-                    throw new ArgumentException(ExceptionMessages.InvalidHorsePower);
+                    throw new ArgumentException($"Invalid horse power: {horsePower}.");
                 }
                 horsePower = value;
             }
         }
 
-        public double CubicCentimeters { get; }
+        public double CubicCentimeters{ get; private set; }
 
         public double CalculateRacePoints(int laps)
         {

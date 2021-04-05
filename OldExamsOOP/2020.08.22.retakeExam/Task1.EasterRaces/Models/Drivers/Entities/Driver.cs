@@ -1,11 +1,9 @@
-﻿using System;
+﻿using EasterRaces.Models.Cars.Contracts;
+using EasterRaces.Models.Drivers.Contracts;
+using System;
 
 namespace EasterRaces.Models.Drivers.Entities
 {
-    using EasterRaces.Models.Cars.Contracts;
-    using EasterRaces.Models.Drivers.Contracts;
-    using EasterRaces.Utilities.Messages;
-
     public class Driver : IDriver
     {
         private string name;
@@ -22,24 +20,25 @@ namespace EasterRaces.Models.Drivers.Entities
             {
                 if (string.IsNullOrEmpty(value) || value.Length < 5)
                 {
-                    throw new ArgumentException(ExceptionMessages.InvalidName);
+                    throw new ArgumentException($"Name {name} cannot be less than 5 symbols.");
                 }
                 name = value;
             }
         }
+
         public ICar Car { get; private set; }
 
         public int NumberOfWins { get; private set; }
 
         public bool CanParticipate => Car != null;
 
+
         public void AddCar(ICar car)
         {
             if (car == null)
             {
-                throw new ArgumentNullException(ExceptionMessages.CarInvalid);
+                throw new ArgumentNullException("Car cannot be null.");
             }
-
             Car = car;
         }
 

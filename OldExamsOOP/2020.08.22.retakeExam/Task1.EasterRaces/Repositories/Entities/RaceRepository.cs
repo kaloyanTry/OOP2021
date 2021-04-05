@@ -7,17 +7,22 @@ namespace EasterRaces.Repositories.Entities
 {
     public class RaceRepository : IRepository<IRace>
     {
-        private readonly List<IRace> races;
-
+        private List<IRace> races;
+        
         public RaceRepository()
         {
             races = new List<IRace>();
         }
+
         public void Add(IRace model) => races.Add(model);
 
-        public IReadOnlyCollection<IRace> GetAll() => races.ToList();
+        public IReadOnlyCollection<IRace> GetAll() => races;
 
-        public IRace GetByName(string name) => races.FirstOrDefault(r => r.Name == name);
+        public IRace GetByName(string name)
+        {
+            IRace race = races.FirstOrDefault(r => r.Name == name);
+            return race;
+        }
 
         public bool Remove(IRace model) => races.Remove(model);
     }
