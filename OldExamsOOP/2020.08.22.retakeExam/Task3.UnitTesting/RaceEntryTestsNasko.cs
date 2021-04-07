@@ -43,7 +43,6 @@ namespace TheRace.Tests
             string driverName = "Sena";
             raceEntry.AddDriver(new UnitDriver(driverName, new UnitCar("BMW", 5000, 500)));
             
-
             Assert.Throws<InvalidOperationException>(() => raceEntry.AddDriver(new UnitDriver(driverName, new UnitCar("Tesla", 6000, 300))));
         }
 
