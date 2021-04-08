@@ -8,7 +8,7 @@ namespace WarCroft.Entities.Inventory
 {
     public abstract class Bag : IBag
     {
-        private List<Item> items;
+        private readonly List<Item> items;
 
         public Bag(int capacity)
         {

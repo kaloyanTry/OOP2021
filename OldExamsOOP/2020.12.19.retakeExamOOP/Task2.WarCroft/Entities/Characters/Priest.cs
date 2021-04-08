@@ -17,10 +17,7 @@ namespace WarCroft.Entities.Characters
         public void Heal(Character character)
         {
             EnsureAlive();
-            if (IsAlive && character.IsAlive)
-            {
-                character.Health += AbilityPoints;
-            }
+            character.Health += AbilityPoints;
         }
     }
 }

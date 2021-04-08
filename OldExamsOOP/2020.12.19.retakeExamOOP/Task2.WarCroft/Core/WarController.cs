@@ -11,19 +11,19 @@ namespace WarCroft.Core
 {
 	public class WarController
 	{
-		private readonly List<Item> items;
-		private readonly List<Character> characters;
+		private readonly List<Item> itemPool;
+		private readonly List<Character> characterParty;
 		
 		public WarController()
 		{
-			items = new List<Item>();
-			characters = new List<Character>();
+			itemPool = new List<Item>();
+			characterParty = new List<Character>();
 		}
 
 		public string JoinParty(string[] args)
 		{
-			var characterType = args[0];
-			var name = args[1];
+			string characterType = args[0];
+			string name = args[1];
 			Character character = null;
 
             if (characterType != "Warrior" && characterType != "Priest")
@@ -40,7 +40,7 @@ namespace WarCroft.Core
 				character = new Priest(name);
             }
 
-			characters.Add(character);
+			characterParty.Add(character);
 
 			return string.Format(SuccessMessages.JoinParty, name);
 		}
@@ -64,38 +64,38 @@ namespace WarCroft.Core
 				item = new HealthPotion();
             }
 
-			items.Add(item);
+			itemPool.Add(item);
 
 			return string.Format(SuccessMessages.AddItemToPool, itemName);
 		}
 
 		public string PickUpItem(string[] args)
 		{
-			var characterName = args[0];
-			Character character = characters.FirstOrDefault(c => c.Name == characterName);
+			string characterName = args[0];
+			Character character = characterParty.FirstOrDefault(c => c.Name == characterName);
 
             if (character == null)
             {
 				throw new ArgumentException(string.Format(ExceptionMessages.CharacterNotInParty, characterName));
 			}
 
-            if (items.Count == 0)
+            if (itemPool.Count == 0)
             {
-				throw new ArgumentException(ExceptionMessages.ItemPoolEmpty);
+				throw new InvalidOperationException(ExceptionMessages.ItemPoolEmpty);
 			}
 
-			var item = items.Last();
+			var item = itemPool.Last();
 			character.Bag.AddItem(item);
-			items.RemoveAt(items.Count - 1);
+			itemPool.Remove(item);
 
 			return string.Format(SuccessMessages.PickUpItem, characterName, item.GetType().Name);
 		}
 
 		public string UseItem(string[] args)
 		{
-			var characterName = args[0];
-			var itemName = args[1];
-			var character = characters.FirstOrDefault(c => c.Name == characterName);
+			string characterName = args[0];
+			string itemName = args[1];
+			var character = characterParty.FirstOrDefault(c => c.Name == characterName);
 
             if (character == null)
             {
@@ -112,11 +112,12 @@ namespace WarCroft.Core
 		{
 			StringBuilder sb = new StringBuilder();
 
-			var charactersSorted = characters.OrderByDescending(c => c.IsAlive).ThenByDescending(c => c.Health);
+			var charactersSorted = characterParty.OrderByDescending(c => c.IsAlive).ThenByDescending(c => c.Health);
 
             foreach (var character in charactersSorted)
             {
 				string characterStatus = character.IsAlive ? "Alive" : "Dead";
+
 				sb.AppendLine($"{character.Name} - HP: {character.Health}/{character.BaseHealth}, AP: {character.Armor}/{character.BaseArmor}, Status: {characterStatus}");
 			}
 
@@ -125,11 +126,11 @@ namespace WarCroft.Core
 
 		public string Attack(string[] args)
 		{
-			var attackerName = args[0];
-			var receiverName = args[1];
+			string attackerName = args[0];
+			string receiverName = args[1];
 
-			var attacker = characters.FirstOrDefault(c => c.Name == attackerName);
-			var reciever = characters.FirstOrDefault(c => c.Name == receiverName);
+			Character attacker = characterParty.FirstOrDefault(c => c.Name == attackerName);
+			Character reciever = characterParty.FirstOrDefault(c => c.Name == receiverName);
 
 			if (attacker == null)
 			{
@@ -139,10 +140,12 @@ namespace WarCroft.Core
 			{
 				throw new ArgumentException(string.Format(ExceptionMessages.CharacterNotInParty, receiverName));
 			}
+
 			if (attacker.GetType().Name != "Warrior")
 			{
 				throw new ArgumentException(string.Format(ExceptionMessages.AttackFail, attackerName));
 			}
+
 			var warrior = (Warrior)attacker;
 			warrior.Attack(reciever);
 
@@ -158,11 +161,11 @@ namespace WarCroft.Core
 
 		public string Heal(string[] args)
 		{
-			var healerName = args[0];
-			var healingReceiverName = args[1];
+			string healerName = args[0];
+			string healingReceiverName = args[1];
 
-			var healer = characters.FirstOrDefault(c => c.Name == healerName);
-			var reciever = characters.FirstOrDefault(c => c.Name == healingReceiverName);
+			var healer = characterParty.FirstOrDefault(c => c.Name == healerName);
+			var reciever = characterParty.FirstOrDefault(c => c.Name == healingReceiverName);
 			if (healer == null)
 			{
 				throw new ArgumentException(string.Format(ExceptionMessages.CharacterNotInParty, healer));
@@ -171,6 +174,7 @@ namespace WarCroft.Core
 			{
 				throw new ArgumentException(string.Format(ExceptionMessages.CharacterNotInParty, reciever));
 			}
+
 			if (healer.GetType().Name != "Priest")
 			{
 				throw new ArgumentException(string.Format(ExceptionMessages.AttackFail, healerName));

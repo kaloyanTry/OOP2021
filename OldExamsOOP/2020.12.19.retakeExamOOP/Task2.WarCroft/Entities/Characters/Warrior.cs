@@ -23,16 +23,7 @@ namespace WarCroft.Entities.Characters
             {
                 throw new InvalidOperationException(ExceptionMessages.CharacterAttacksSelf);
             }
-            character.TakeDamage(AbilityPoints);
-
-            //if (IsAlive && character.IsAlive)
-            //{
-            //    if (Name == character.Name)
-            //    {
-            //        throw new InvalidOperationException(ExceptionMessages.CharacterAttacksSelf);
-            //    }
-                
-            //}         
+            character.TakeDamage(AbilityPoints);      
         }
     }
 }
