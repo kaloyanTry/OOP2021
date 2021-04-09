@@ -42,7 +42,10 @@ namespace Computers.Tests
         [Test]
         public void AddComputer_ShouldThrowExceptionWhenAddingNull()
         {
-            Assert.Throws<ArgumentNullException>(() => computerManager.AddComputer(null));
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                computerManager.AddComputer(null);
+            }, "Can not be null.");
         }
 
         [Test]
@@ -60,12 +63,15 @@ namespace Computers.Tests
 
             Assert.That(() => computerManager.AddComputer(computer), Throws.ArgumentException.With.Message.EqualTo("This computer already exists."));
 
-            //Exception ex = Assert.Throws<ArgumentException>(() =>
+            //[Test]
+            //public void AddShouldThrowExceptionWithExistingComputer()
             //{
-            //    computerManager.AddComputer(new Computer("HP", "Laptop", 1200.0m));
-            //    computerManager.AddComputer(new Computer("HP", "Laptop", 1200.0m));
-            //});
-            //Assert.AreEqual(ex.Message, "This computer already exists.");
+            //    this.computerManager.AddComputer(this.defaultComputer);
+            //    Assert.Throws<ArgumentException>(() =>
+            //    {
+            //        this.computerManager.AddComputer(this.defaultComputer);
+            //    }, "This computer already exists.");
+            //}
         }
 
         [Test]
@@ -116,6 +122,15 @@ namespace Computers.Tests
         }
 
         [Test]
+        public void Remove_ShouldThrowExceptionWithInvalidComputerManufacturer()
+        {
+            Assert.Throws<ArgumentException>(() =>
+            {
+                computerManager.RemoveComputer(computer.Manufacturer, "Acer");
+            }, "There is no computer with this manufacturer and model.");
+        }
+
+        [Test]
         public void GetComputer_ShouldThrowArgumentExceptionWhenManufacturerNull()
         {
             Assert.Throws<ArgumentNullException>(() => computerManager.GetComputer(null, "Yoga"));
@@ -134,6 +149,15 @@ namespace Computers.Tests
         }
 
         [Test]
+        public void GetComputer_ShouldWorkCorrectly()
+        {
+            computerManager.AddComputer(computer);
+            var result = computerManager.GetComputer(computer.Manufacturer, computer.Model);
+
+            Assert.AreSame(computer, result);
+        }
+
+        [Test]
         public void GetComputersByManufacturer_ShouldReturnCollectionOfAllCompsWithGivenManufacturer()
         {
             computerManager.AddComputer(computer);
@@ -141,15 +165,10 @@ namespace Computers.Tests
             computerManager.AddComputer(comp);
             var otherComp = new Computer("IBM", "model", 1300m);
             computerManager.AddComputer(otherComp);
-            ICollection<Computer> expectedCollection = new List<Computer>()
-            {
-                computer,
-                comp
-            };
 
-            var actualCollection = this.computerManager.GetComputersByManufacturer("Asus");
+            var collection = this.computerManager.GetComputersByManufacturer("Asus");
 
-            CollectionAssert.AreEqual(expectedCollection, actualCollection);
+            Assert.That(collection.Count, Is.EqualTo(2));
         }
 
         [Test]
@@ -164,6 +183,15 @@ namespace Computers.Tests
             var collection = computerManager.GetComputersByManufacturer("Toshiba");
 
             CollectionAssert.IsEmpty(collection);
+        }
+
+        [Test]
+        public void GetByManufacturer_ShouldThrowExceptionWithNullManufacturer()
+        {
+            Assert.Throws<ArgumentNullException>(() =>
+            {
+                computerManager.GetComputersByManufacturer(null);
+            });
         }
     }
 }
