@@ -6,6 +6,7 @@ namespace EasterRaces.Repositories.Contracts
 {
     public class CarRepository : IRepository<ICar>
     {
+    
         private readonly List<ICar> cars;
 
         public CarRepository()
