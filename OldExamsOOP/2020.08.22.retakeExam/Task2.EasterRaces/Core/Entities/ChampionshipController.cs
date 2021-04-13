@@ -67,6 +67,7 @@ namespace EasterRaces.Core.Entities
         public string CreateCar(string type, string model, int horsePower)
         {
             var existingCar = carRepository.GetByName(model);
+            
             if (existingCar != null)
             {
                 throw new ArgumentException($"Car {model} is already created.");
@@ -83,6 +84,7 @@ namespace EasterRaces.Core.Entities
             }
 
             carRepository.Add(car);
+            
             return $"{car.GetType().Name} {model} is created.";
         }
 
