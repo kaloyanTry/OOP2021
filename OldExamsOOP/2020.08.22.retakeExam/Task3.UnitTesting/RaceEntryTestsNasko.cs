@@ -26,6 +26,7 @@ namespace TheRace.Tests
         {
             raceEntry.AddDriver(new UnitDriver("Sena", new UnitCar("Reno", 4000, 400)));
             raceEntry.AddDriver(new UnitDriver("Prost", new UnitCar("BMW", 5000, 500)));
+            
             Assert.That(raceEntry.Counter, Is.EqualTo(2));
         }
 
@@ -62,6 +63,7 @@ namespace TheRace.Tests
             Assert.Throws<InvalidOperationException>(() => raceEntry.CalculateAverageHorsePower());
 
             raceEntry.AddDriver(new UnitDriver("Sena", new UnitCar("MC", 5000, 500)));
+            
             Assert.Throws<InvalidOperationException>(() => raceEntry.CalculateAverageHorsePower());
         }
 
