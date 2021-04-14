@@ -124,5 +124,6 @@
 
             Assert.Throws<InvalidOperationException>(() => aquarium.SellFish("Jisi"), "Fish with the name Jisi doesn't exist!");
         }
+
     }
 }
