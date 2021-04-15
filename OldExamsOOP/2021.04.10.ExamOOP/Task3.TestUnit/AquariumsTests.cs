@@ -3,7 +3,6 @@
     using NUnit.Framework;
     using System;
     using System.Collections.Generic;
-    using System.Linq;
 
     public class AquariumsTests
     {
@@ -13,119 +12,69 @@
         [SetUp]
         public void SetUp()
         {
-            aquarium = new Aquarium("Freshwater", 50);
+            aquarium = new Aquarium("Fresh", 50);
             fish = new List<Fish>();
         }
 
         [Test]
-        public void CtorAquarium_ShouldNotSetEmpty()
+        public void Ctor_ShouldReturnCheck()
         {
             Assert.IsNotNull(aquarium);
         }
 
         [Test]
-        public void CtorFish_ShouldNotSetEmpty()
+        public void Ctor_ShouldReturnFishList()
         {
             Assert.IsNotNull(fish);
         }
 
+
         [Test]
-        public void Name_ShoulThrowException_WhenNull()
+        public void Ctor_ShouldReturnCheckName()
         {
-            Assert.Throws<ArgumentNullException>(() => new Aquarium(null, 50));
+            Assert.AreEqual(aquarium.Name, "Fresh");
         }
 
         [Test]
-        public void Name_ShoulThrowException_WhenEmpty()
+        public void Ctor_ShouldReturnCheckCapacity()
         {
-            Assert.Throws<ArgumentNullException>(() => new Aquarium("", 50));
+            Assert.AreEqual(aquarium.Capacity, 50);
         }
 
         [Test]
-        public void Capacity_ShoulThrowException_WhenLess()
+        public void Name_ShouldReturnCheckThrowsName()
         {
-            Assert.Throws<ArgumentException>(() => new Aquarium("Salty", -5));
+            Assert.Throws<ArgumentNullException>(() => aquarium = new Aquarium("", 25), "Invalid aquarium name!");
         }
 
         [Test]
-        public void Count_ShouldBeCorrect()
+        public void Ctor_ShouldReturnCheckThrows()
         {
-            Assert.That(fish.Count, Is.Zero);
+            Assert.That(() => aquarium = new Aquarium("Sisi", -5), Throws.ArgumentException.With.Message.EqualTo("Invalid aquarium capacity!"));
         }
 
         [Test]
-        public void AddCount_ShouldBeCorrect_WhenAdd()
+        public void Ad_ShouldCountCorrect()
         {
-            fish.Add(new Fish("Sisi"));
-            
-            Assert.That(fish.Count, Is.EqualTo(1));
+            aquarium.Add(new Fish("Miim"));
+
+            Assert.That(aquarium.Count, Is.EqualTo(1));
         }
 
         [Test]
-        public void AddCount_ShouldBeCorrect_WhenAdd2()
+        public void Remove_ShouldThrowException_WhenNameNotExsist()
         {
-            var fishName = "Sisi";
-            var fishToAdd = new Fish(fishName);
-            fish.Add(fishToAdd);
-            
-            Assert.That(fish.Contains(fishToAdd));
+            var fishName = "Sina";
+
+            Assert.Throws< InvalidOperationException>(() => aquarium.RemoveFish(fishName), $"Fish with the name {fishName} doesn't exist!");
         }
 
         [Test]
-        public void Add_ShouldThrowRightMessage()
+        public void SellFish_ShouldThrowException_WhenNameNotExsist()
         {
-            for (int i = 0; i < aquarium.Capacity; i++)
-            {
-                aquarium.Add(new Fish($"{i}"));
-            }
+            var fishName = "Nofish";
 
-            Assert.That(() =>
-            {
-                aquarium.Add(new Fish("Resi"));
-            }, Throws.InvalidOperationException.With.Message.EqualTo("Aquarium is full!"));
-
+            Assert.Throws<InvalidOperationException>(() => aquarium.SellFish(fishName), $"Fish with the name {fishName} doesn't exist!");
         }
-
-        [Test]
-        public void Remove_ShouldBeCorrect()
-        {    
-            aquarium.Add(new Fish("Sisi"));
-            aquarium.RemoveFish("Sisi");
-
-            Assert.That(fish.Count, Is.EqualTo(0));
-        }
-
-        [Test]
-        public void Remove_ShouldThrowRightMessage()
-        {
-            var fishName = "Misi";
-            var fishToAdd = new Fish(fishName);
-            aquarium.Add(fishToAdd);
-
-            Assert.Throws<InvalidOperationException>(() => aquarium.RemoveFish("Jisi"), "Fish with the name Jisi doesn't exist!");
-        }
-
-        [Test]
-        public void SellFish_ShouldBeCorrect()
-        {
-            var fishName = "Misi";
-            var fishToAdd = new Fish(fishName);
-            aquarium.Add(fishToAdd);
-
-            var aquaSell =  aquarium.SellFish("Misi");
-
-            Assert.AreEqual(fishToAdd, aquaSell);
-        }
-
-        [Test]
-        public void SellFish_ShouldThrowRightMessage()
-        {
-            var fishName = "Misi";
-            var fishToAdd = new Fish(fishName);
-            aquarium.Add(fishToAdd);
-
-            Assert.Throws<InvalidOperationException>(() => aquarium.SellFish("Jisi"), "Fish with the name Jisi doesn't exist!");
-        }
-
     }
 }
