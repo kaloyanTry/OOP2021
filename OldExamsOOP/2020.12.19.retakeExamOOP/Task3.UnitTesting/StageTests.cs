@@ -3,7 +3,7 @@
 // Test ONLY the Stage class. 
 namespace FestivalManager.Tests
 {
-    using FestivalManager.Entities; //comment for Judge
+    //using FestivalManager.Entities; //comment for Judge
     using NUnit.Framework;
     using System;
     using System.Collections.Generic;
@@ -39,6 +39,13 @@ namespace FestivalManager.Tests
 		{
 			Assert.IsNotNull(performers);
 		}
+
+		[Test]
+		public void ValidateNullValueShouldTrowException()
+        {
+			Assert.Throws<ArgumentNullException>(() => stage.AddPerformer(null));
+			Assert.Throws<ArgumentNullException>(() => stage.AddSong(null));
+        }
 
 		[Test]
 		public void AddPerformer_ShouldAddCorrectly()
@@ -85,13 +92,50 @@ namespace FestivalManager.Tests
 		}
 
 		[Test]
-		public void AddSongToPerformer_ShouldThrowExcetion()
+		public void AddSongToPerformer_ShouldWorkAll()
 		{
-			var song = new Song("You", new TimeSpan(0, 2, 24));
+			var song = new Song("You", new TimeSpan(0, 3, 00));
 			var performer = new Performer("Fil", "Kir", 29);
-			performer.SongList.Add(song);
 
-			Assert.That(performer.SongList.Contains(song));
+			stage.AddSong(song);
+			stage.AddPerformer(performer);
+
+			var actual = stage.AddSongToPerformer("You", "Fil Kir");
+			var expected = "You (03:00) will be performed by Fil Kir";
+
+			Assert.AreEqual(actual, expected);
+		}
+
+		[Test]
+		public void AddSongToPerformer_ShouldThrowException_WhenNull()
+        {
+			var song = new Song("You", new TimeSpan(0, 3, 00));
+			var performer = new Performer("Fil", "Kir", 29);
+
+			Assert.Throws<ArgumentNullException>(() => stage.AddSongToPerformer(null, "Fill"));
+			Assert.Throws<ArgumentNullException>(() => stage.AddSongToPerformer("You", null));
+			Assert.Throws<ArgumentNullException>(() => stage.AddSongToPerformer(null, null));
+		}
+
+		[Test]
+		public void Play_ShouldWorkCorrectly()
+        {
+			Song song1 = new Song("You", new TimeSpan(0, 3, 24));
+			Song song2 = new Song("She", new TimeSpan(0, 2, 22));
+			Performer performer = new Performer("Fil", "Kir", 29);
+
+			stage.AddSong(song1);
+			stage.AddSong(song2);
+
+			stage.AddPerformer(performer);
+
+			stage.AddSongToPerformer("You", "Fil Kir");
+			stage.AddSongToPerformer("She", "Fil Kir");
+
+			var actual = stage.Play();
+			var expected = "1 performers played 2 songs";
+
+			Assert.AreEqual(actual, expected);
 		}
 
 		[Test]
