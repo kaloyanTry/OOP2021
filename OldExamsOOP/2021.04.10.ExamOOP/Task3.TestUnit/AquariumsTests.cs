@@ -57,6 +57,7 @@
         public void AddCount_ShouldBeCorrect_WhenAdd()
         {
             fish.Add(new Fish("Sisi"));
+            
             Assert.That(fish.Count, Is.EqualTo(1));
         }
 
@@ -66,6 +67,7 @@
             var fishName = "Sisi";
             var fishToAdd = new Fish(fishName);
             fish.Add(fishToAdd);
+            
             Assert.That(fish.Contains(fishToAdd));
         }
 
