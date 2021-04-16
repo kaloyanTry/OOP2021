@@ -8,8 +8,8 @@ namespace WarCroft.Entities.Inventory
 {
     public abstract class Bag : IBag
     {
-        private List<Item> items;
-
+        private readonly List<Item> items;
+        
         public Bag(int capacity)
         {
             Capacity = capacity;
@@ -24,10 +24,11 @@ namespace WarCroft.Entities.Inventory
 
         public void AddItem(Item item)
         {
-            if (item.Weight + Load > Capacity)
+            if (Load + item.Weight > Capacity)
             {
                 throw new InvalidOperationException(ExceptionMessages.ExceedMaximumBagCapacity);
             }
+
             items.Add(item);
         }
 
@@ -38,11 +39,14 @@ namespace WarCroft.Entities.Inventory
                 throw new InvalidOperationException(ExceptionMessages.EmptyBag);
             }
 
-            var currentItem = items.FirstOrDefault(i => i.GetType().Name == name);
+            Item currentItem = items.FirstOrDefault(i => i.GetType().Name == name);
             if (currentItem == null)
             {
                 throw new ArgumentException(string.Format(ExceptionMessages.ItemNotFoundInBag, name));
             }
+
+            items.Remove(currentItem);
+
             return currentItem;
         }
     }
