@@ -44,7 +44,6 @@ namespace WarCroft.Entities.Inventory
             {
                 throw new ArgumentException(string.Format(ExceptionMessages.ItemNotFoundInBag, name));
             }
-
             items.Remove(currentItem);
 
             return currentItem;
