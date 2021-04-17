@@ -9,7 +9,6 @@ namespace WarCroft.Entities.Characters.Contracts
 	public abstract class Character
 	{
 		// TODO: Implement the rest of the class.
-
 		private string name;
 		private double health;
 		private double armor;
@@ -107,6 +106,7 @@ namespace WarCroft.Entities.Characters.Contracts
 		public void UseItem(Item item)
 		{
 			EnsureAlive();
+			
 			item.AffectCharacter(this);
 		}
 	}
