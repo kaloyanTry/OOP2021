@@ -24,6 +24,6 @@ namespace WarCroft
             //engine.Run();
 
             //Console.WriteLine(sbWriter.sb.ToString().Trim());
-        }
+        //}
 	}
 }
