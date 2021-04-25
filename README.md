@@ -1,5 +1,5 @@
 # OOPCSharp
-OOP Course with C# //SoftUni
+OOP Course with C# //SoftUni [link](https://softuni.bg/trainings/3214/csharp-oop-february-2021/internal)
 
 1. Inferitance: Lab and Exercises [link](https://github.com/kaloyanTry/OOP2021/tree/main/Inheritance)
 2. Encapsulation: Lab and Exercises [link](https://github.com/kaloyanTry/OOP2021/tree/main/Encapsulation)
