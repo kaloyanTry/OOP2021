@@ -11,4 +11,4 @@ OOP Course with C# //SoftUni [link](https://softuni.bg/trainings/3214/csharp-oop
 8. Unit Testing: Lab and Exercises [link](https://github.com/kaloyanTry/OOP2021/tree/main/UnitTesting)
 9. Mocking and Test Driven: Lab and Exercises [link](https://github.com/kaloyanTry/OOP2021/tree/main/MokingTestDriven)
 10. Design Patterns: Lab and Exercises [link](https://github.com/kaloyanTry/OOP2021/tree/main/DesignPatterns)
-11. Exam Preparation: Old exams/2020 all/ [link](https://github.com/kaloyanTry/OOP2021/tree/main/OldExamsOOP)
+11. Exams: ExamPreparaton [link](https://github.com/kaloyanTry/OOP2021/tree/main/OldExamsOOP)
