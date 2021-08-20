@@ -62,6 +62,7 @@ namespace Vehicles
             double fuelConsumption = double.Parse(infoVehicle[2]);
 
             Vehicle vehicle = null;
+            
             if (vehicleType == nameof(Car))
             {
                 vehicle = new Car(fuelQuantity, fuelConsumption);
