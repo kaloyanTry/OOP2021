@@ -12,6 +12,7 @@ namespace Cars
             Color = color;
             Battery = battery;
         }
+        
         public string Model { get; set; }
         public string Color { get; set; }
         public int Battery { get; set; }
